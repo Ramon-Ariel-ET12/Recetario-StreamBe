@@ -1,6 +1,32 @@
 @api_HostAddress = http://localhost:5176/api
 
+
+
+POST {{api_HostAddress}}/Usuario/CrearUsuario
+Content-Type: application/json
+
+{
+  "Nombre": "Diego",
+  "Apellido": "Vega",
+  "Correo": "diego.vegaet12@gmail.com",
+  "Clave": "Nose"
+}
+###
+
+POST {{api_HostAddress}}/Usuario/IniciarSesion
+Content-Type: application/json
+
+{
+  "Correo": "diego.vegaet12@gmail.com",
+  "Clave": "Nose"
+}
+
+###
+
 GET {{api_HostAddress}}/Usuario/Hola/
 Accept: application/json
 
 ###
+
+POST {{api_HostAddress}}/Usuario/CerrarSesion/
+Accept: application/json
