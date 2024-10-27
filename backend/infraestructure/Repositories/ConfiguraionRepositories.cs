@@ -7,7 +7,8 @@ public static class ConfiguraionRepositories
 {
     public static IServiceCollection AddRepositories(this IServiceCollection repositories)
     {
-        repositories.AddScoped<IUsuarioRepository, UsuarioRepository>();
+        repositories.AddTransient<IUsuarioRepository, UsuarioRepository>();
+        repositories.AddTransient<IRecetaRepository, RecetaRepository>();
         return repositories;
     }
 }
