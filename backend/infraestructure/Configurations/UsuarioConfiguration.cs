@@ -9,7 +9,7 @@ public class UsuarioConfiguration : IEntityTypeConfiguration<Usuario>
     public void Configure(EntityTypeBuilder<Usuario> builder)
     {
         builder.HasKey(x => x.IdUsuario);
-        builder.Property(x => x.IdUsuario).ValueGeneratedOnAdd().IsRequired();
+        builder.Property(x => x.IdUsuario).IsRequired();
         builder.Property(x => x.Nombre).IsRequired();
         builder.Property(x => x.Apellido).IsRequired();
         builder.Property(x => x.Correo).IsRequired();
