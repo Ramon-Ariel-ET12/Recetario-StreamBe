@@ -24,8 +24,8 @@ public class UsuarioRepository : IUsuarioRepository
     {
         if (expression == null)
         {
-            return await context.Usuario.Select(x => new Usuario { Nombre = x.Nombre, Apellido = x.Apellido, Correo = x.Correo, }).AsNoTracking().ToListAsync();
+            return await context.Usuario.AsNoTracking().OrderByDescending(x => x.FechaCreacion).ToListAsync();
         }
-        return await context.Usuario.Where(expression).Select(x => new Usuario { Nombre = x.Nombre, Apellido = x.Apellido, Correo = x.Correo, }).AsNoTracking().ToListAsync();
+        return await context.Usuario.Where(expression).AsNoTracking().OrderByDescending(x => x.FechaCreacion).ToListAsync();
     }
 }

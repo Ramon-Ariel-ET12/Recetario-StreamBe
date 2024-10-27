@@ -34,9 +34,9 @@ public class UsuarioController : ControllerBase
 
     [HttpPost]
     [AllowAnonymous]
-    public async Task<IActionResult> IniciarSesion([FromBody] LoginModel usuario)
+    public async Task<IActionResult> IniciarSesion([FromBody] IniciarSesionUsuario usuario)
     {
-        var logueado = await context.TraerUsuarioPorCorreoyClave(usuario.Correo, usuario.Clave);
+        var logueado = await context.TraerUsuarioPorCorreoyClave(usuario.Correo!, usuario.Clave!);
         if (logueado != null)
         {
             var token = GenerateJwtToken(logueado);
@@ -55,27 +55,55 @@ public class UsuarioController : ControllerBase
 
     [HttpPost]
     [AllowAnonymous]
-    public async Task<IActionResult> CrearUsuario([FromBody] Usuario usuario)
+    public async Task<IActionResult> CrearUsuario([FromBody] RegistrarUsuario usuario)
     {
-        if (usuario.Nombre != null && usuario.Apellido != null && usuario.Correo != null && usuario.Clave != null)
+        var existe = await context.TraerUsuarioPorCorreo(usuario.Correo!);
+        if (existe == null)
         {
-            await context.RegistrarUsuario(usuario);
-            return Ok("Usuario Creado");
+            if (usuario.Nombre != null && usuario.Apellido != null && usuario.Correo != null && usuario.Clave != null)
+            {
+                var newuser = new Usuario() { Nombre = usuario.Nombre, Apellido = usuario.Apellido, Correo = usuario.Correo, Clave = usuario.Clave };
+                await context.RegistrarUsuario(newuser);
+                return Ok("Usuario Creado");
+            }
+        }
+        else
+        {
+            return BadRequest($"Ya existe ese correo: {usuario.Correo}");
         }
         return Unauthorized("Error");
     }
 
     [HttpGet]
-    public IActionResult Hola()
+    public async Task<IActionResult> TraerUsuario()
     {
-        return Ok();
+        if (Request.Cookies.TryGetValue("AuthToken", out var token))
+        {
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+            
+            var correo = jwtToken.Claims.FirstOrDefault(c => c.Type == "Correo")!.Value;
+
+            var usuario = await context.TraerUsuarioPorCorreo(correo);
+            var usuarioQueryDto = new ConsultarUsuario
+            {
+                IdUsuario = usuario!.IdUsuario.ToString(),
+                Nombre = usuario.Nombre,
+                Apellido = usuario.Apellido,
+                Correo = usuario.Correo,
+                FechaCreacion = usuario.FechaCreacion
+            };
+            return Ok(usuarioQueryDto);
+        }
+        return Unauthorized("No se encontró el token");
     }
+
     private static string GenerateJwtToken(Usuario usuario)
     {
         var claims = new List<Claim>
         {
             new("IdUsuario", usuario.IdUsuario.ToString()),
-            new("Nombre", usuario.Nombre!),
+            new("Nombre", usuario.Nombre),
             new("Apellido", usuario.Apellido),
             new("Correo", usuario.Correo),
         };
@@ -93,8 +121,24 @@ public class UsuarioController : ControllerBase
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 }
-public class LoginModel
+public class IniciarSesionUsuario
 {
     public string? Correo { get; set; }
     public string? Clave { get; set; }
+}
+public class RegistrarUsuario
+{
+    public string? Nombre { get; set; }
+    public string? Apellido { get; set; }
+    public string? Correo { get; set; }
+    public string? Clave { get; set; }
+}
+
+public class ConsultarUsuario
+{
+    public string? IdUsuario { get; set; }
+    public string? Nombre { get; set; }
+    public string? Apellido { get; set; }
+    public string? Correo { get; set; }
+    public DateTime? FechaCreacion { get; set; }
 }
