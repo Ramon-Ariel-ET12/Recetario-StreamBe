@@ -112,8 +112,8 @@ public class UsuarioController : ControllerBase
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
-            issuer: "http://localhost:5176",
-            audience: "http://localhost:5176",
+            issuer: "http://localhost:5050",
+            audience: "http://localhost:5050",
             claims: claims,
             expires: DateTime.Now.AddMinutes(30),
             signingCredentials: creds);
