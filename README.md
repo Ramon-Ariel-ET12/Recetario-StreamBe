@@ -26,6 +26,12 @@ https://github.com/Ramon-Ariel-ET12/Recetario-StreamBe/tree/main
 ### Instalación
 
  Ayuda
+### Uso
+
+ Ayuda
+### Soporte
+
+ Ayuda
 
 ## Despliegue
 
@@ -42,10 +48,15 @@ _Agrega notas adicionales sobre que cosas se debe instalar, configurar y como ha
 | Ramón Lugones       | Desarrollo     | [Ramon-Ariel-ET12](https://github.com/Ramon-Ariel-ET12)       |
 | Diego Vega      | Desarrollo            | [Diego-VJM](https://github.com/Diego-VJM)       |
 | Noelia Almaraz   | Desarrollo            | [NoeliaAT](https://github.com/NoeliaAT)                   |
-| Axel Martines  | Desarrollo | [AxelMtz1]()       |
+| Axel Martines  | Desarrollo | [AxelMtz1](https://github.com/AxelMtz1)       |
 
 
 
 ## Licencia
 
 Este proyecto está bajo la Licencia (Tu Licencia) - mira el archivo [LICENSE](https://github.com/Ramon-Ariel-ET12/Recetario-StreamBe/blob/main/LICENSE) para detalles.
+
+
+### Estado del Proyecto
+
+ Actualmente en desarrollo. Aunque el proyecto todavía no está del todo terminado, creemos que hay cosas que se pueden mejorar y que posiblemente se realizará una nueva version del proyecto a futuro.
