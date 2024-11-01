@@ -1,7 +1,7 @@
 
-# Recetario - Stream b
+# Recetario - StreamBe
 
- Proyecto para generar un Recetario. Este proyecto fue creado con el objetivo de implementar los conocimientos aprendidos de el curso Stream b, pero en una modalidad de trabajo colaborativo (trabajo de grupo). 
+ Proyecto para generar un Recetario. Este proyecto fue creado con el objetivo de implementar los conocimientos aprendidos de el curso StreamBe, pero en una modalidad de trabajo colaborativo (trabajo de grupo). 
 
 
 ## Comenzando
