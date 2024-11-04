@@ -26,7 +26,15 @@ options.UseNpgsql(connection);
 var context = new RecetarioDbContext(options.Options);
 context.Database.Migrate();
 
-
+builder.Services.AddCors(x =>
+{
+    x.AddPolicy("RecetarioPolicy", builder =>
+    {
+        builder.AllowAnyHeader()
+               .AllowAnyMethod()
+               .AllowAnyOrigin();
+    });
+});
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -54,6 +62,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 var app = builder.Build();
 
+app.UseCors("RecetarioPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 
