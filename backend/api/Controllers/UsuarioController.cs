@@ -28,27 +28,38 @@ public class UsuarioController : ControllerBase
         if (Request.Cookies.ContainsKey("AuthToken"))
         {
             Response.Cookies.Delete("AuthToken");
+            return Ok();
         }
-        return Ok();
+        else
+        {
+            return BadRequest("Error");
+        }
     }
 
     [HttpPost]
     [AllowAnonymous]
     public async Task<IActionResult> IniciarSesion([FromBody] IniciarSesionUsuario usuario)
     {
-        var logueado = await context.TraerUsuarioPorCorreoyClave(usuario.Correo!, usuario.Clave!);
-        if (logueado != null)
+        try
         {
-            var token = GenerateJwtToken(logueado);
-            var cookieOptions = new CookieOptions
+            var logueado = await context.TraerUsuarioPorCorreoyClave(usuario.Correo!, usuario.Clave!);
+            if (logueado != null)
             {
-                HttpOnly = true,
-                Secure = false,
-                Expires = DateTime.Now.AddMinutes(30)
-            };
+                var token = GenerateJwtToken(logueado);
+                var cookieOptions = new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = false,
+                    Expires = DateTime.Now.AddMinutes(30)
+                };
 
-            Response.Cookies.Append("AuthToken", token, cookieOptions);
-            return Ok("Ya tas logueado!");
+                Response.Cookies.Append("AuthToken", token, cookieOptions);
+                return Ok("Ya tas logueado!");
+            }
+        }
+        catch (Exception)
+        {
+            return Unauthorized("Credenciales incorrectos");
         }
         return Unauthorized("Credenciales incorrectos");
     }
@@ -57,45 +68,59 @@ public class UsuarioController : ControllerBase
     [AllowAnonymous]
     public async Task<IActionResult> CrearUsuario([FromBody] RegistrarUsuario usuario)
     {
-        var existe = await context.TraerUsuarioPorCorreo(usuario.Correo!);
-        if (existe == null)
+        try
         {
             if (usuario.Nombre != null && usuario.Apellido != null && usuario.Correo != null && usuario.Clave != null)
             {
-                var newuser = new Usuario() { Nombre = usuario.Nombre, Apellido = usuario.Apellido, Correo = usuario.Correo, Clave = usuario.Clave };
-                await context.RegistrarUsuario(newuser);
-                return Ok("Usuario Creado");
+                var existe = await context.TraerUsuarioPorCorreo(usuario.Correo!);
+                if (existe == null)
+                {
+                    var newuser = new Usuario() { Nombre = usuario.Nombre, Apellido = usuario.Apellido, Correo = usuario.Correo, Clave = usuario.Clave };
+                    await context.RegistrarUsuario(newuser);
+                    return Ok("Usuario Creado");
+                }
+                else
+                {
+                    return BadRequest($"Ya existe ese correo: {usuario.Correo}");
+                }
             }
+            return Unauthorized("Error");
         }
-        else
+        catch (Exception)
         {
-            return BadRequest($"Ya existe ese correo: {usuario.Correo}");
+            return Unauthorized("Error");
         }
-        return Unauthorized("Error");
     }
 
     [HttpGet]
     public async Task<IActionResult> TraerUsuario()
     {
-        if (Request.Cookies.TryGetValue("AuthToken", out var token))
+        try
         {
-            var handler = new JwtSecurityTokenHandler();
-            var jwtToken = handler.ReadJwtToken(token);
-            
-            var correo = jwtToken.Claims.FirstOrDefault(c => c.Type == "Correo")!.Value;
-
-            var usuario = await context.TraerUsuarioPorCorreo(correo);
-            var usuarioQueryDto = new ConsultarUsuario
+            if (Request.Cookies.TryGetValue("AuthToken", out var token))
             {
-                IdUsuario = usuario!.IdUsuario.ToString(),
-                Nombre = usuario.Nombre,
-                Apellido = usuario.Apellido,
-                Correo = usuario.Correo,
-                FechaCreacion = usuario.FechaCreacion
-            };
-            return Ok(usuarioQueryDto);
+                var handler = new JwtSecurityTokenHandler();
+                var jwtToken = handler.ReadJwtToken(token);
+
+                var correo = jwtToken.Claims.FirstOrDefault(c => c.Type == "Correo")!.Value;
+
+                var usuario = await context.TraerUsuarioPorCorreo(correo);
+                var usuarioQueryDto = new ConsultarUsuario
+                {
+                    IdUsuario = usuario!.IdUsuario.ToString(),
+                    Nombre = usuario.Nombre,
+                    Apellido = usuario.Apellido,
+                    Correo = usuario.Correo,
+                    FechaCreacion = usuario.FechaCreacion
+                };
+                return Ok(usuarioQueryDto);
+            }
+            return Unauthorized("No se encontró el token");
         }
-        return Unauthorized("No se encontró el token");
+        catch (System.Exception)
+        {
+            return BadRequest("Error");
+        }
     }
 
     private static string GenerateJwtToken(Usuario usuario)
@@ -115,7 +140,6 @@ public class UsuarioController : ControllerBase
             issuer: "http://localhost:5050",
             audience: "http://localhost:5050",
             claims: claims,
-            expires: DateTime.Now.AddMinutes(30),
             signingCredentials: creds);
 
         return new JwtSecurityTokenHandler().WriteToken(token);
