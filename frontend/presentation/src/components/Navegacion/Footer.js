@@ -1,18 +1,17 @@
-
-import Container from 'react-bootstrap/esm/Container';
-import Navbar from 'react-bootstrap/Navbar';
-import { Github } from 'react-bootstrap-icons';
-
-function name() {
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+function Footer() {
     return (
-        <Navbar expand='lg' variant='dark' className="bg-dark bottom-0">
-            <Container>
-                <Navbar.Brand href="https://github.com/Ramon-Ariel-ET12/Recetario-StreamBe">
-                    <Github />
-                </Navbar.Brand>
-            </Container>
-        </Navbar>
+        <footer>
+            <nav className="navbar navbar-expand-lg">
+                <div className="container">
+                    <a className="navbar-brand" href="https://github.com/Ramon-Ariel-ET12/Recetario-StreamBe">
+                        <i className="bi bi-github" style={{ fontSize: '1.5rem' }}></i>
+                    </a>
+                </div>
+            </nav>
+        </footer>
     );
 }
 
-export default name;
+export default Footer;

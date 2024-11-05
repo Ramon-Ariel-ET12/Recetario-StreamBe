@@ -1,35 +1,32 @@
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Dropdown from 'react-bootstrap/Dropdown';
-import Navbar from 'react-bootstrap/Navbar';
-import { Cookie, PersonCircle } from 'react-bootstrap-icons';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import 'bootstrap';
 
-function NavBar() {
+function Header() {
     return (
-        <Navbar variant='dark' sticky='top' className='bg-dark' expand="lg">
-            <Container>
+        <header className='sticky-top'>
+            <nav className="navbar navbar-expand-lg">
+                <div className="container">
 
-                <Navbar.Brand href="#home">
-                    <Cookie size={30} />
-                </Navbar.Brand>
+                    <a className="navbar-brand" href="/">
+                        <i className="bi bi-cookie" style={{ fontSize: '1.5rem' }}></i>
+                    </a>
 
-                <Nav className='me-auto' />
-                <Nav>
-                    <Nav.Link href="#memes"></Nav.Link>
-                    <Dropdown type="button" data-bs-toggle="dropdown" aria-expanded="false" className="d-inline mx-2">
-                        <PersonCircle size={30} />
+                    <div className="nav-item dropdown">
+                        <button role='button' data-bs-toggle="dropdown" style={{ background: 'none', border: 'none', }}>
 
-                        <Dropdown.Menu style={{ position: 'absolute' }} >
-                            <Dropdown.Item href="#">Menu Item</Dropdown.Item>
-                            <Dropdown.Item href="#">Menu Item</Dropdown.Item>
-                            <Dropdown.Item href="#">Menu Item</Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
-                </Nav>
+                            <i className="bi bi-person-circle" style={{ fontSize: '1.5rem' }} ></i>
+                        </button>
 
-            </Container>
-        </Navbar>
+                        <ul className="dropdown-menu dropdown-menu-end">
+                            <li><a className="dropdown-item" href="/Subir-receta">Subir receta</a></li>
+                            <li><a className="dropdown-item" href="/Cerrar-sesion">Cerrar sesión</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header >
     );
 }
 
-export default NavBar;
+export default Header;

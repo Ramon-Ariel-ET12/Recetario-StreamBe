@@ -4,13 +4,11 @@ import Footer from './Footer';
 
 const Layout = ({ children }) => {
     return (
-        <div>
+        <div className=' d-flex flex-column justify-content-between' style={{height:'100vh'}}>
             <Header />
-            
             <main>{children}</main>
-
             <Footer />
-        </div>
+        </div >
     );
 };
 

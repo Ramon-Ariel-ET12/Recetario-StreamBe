@@ -1,41 +1,44 @@
-import Form from 'react-bootstrap/Form';
-import Card from 'react-bootstrap/Card';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from 'react';
 import axios from 'axios';
-import Button from 'react-bootstrap/esm/Button';
 
-function FormGroupExample() {
-    const [email, setEmail] = useState("")
-    const [pass, setPass] = useState("")
 
+function Login() {
+    const [email, setEmail] = useState(null);
+    const [pass, setPass] = useState(null);
+    const [message, setMessage] = useState(null);
     const requestLogin = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
         try {
-            const response = await axios.post("https://backend-streambe.onrender.com/api/Usuario/IniciarSesion", { Correo: email, Clave: pass })
-            console.log(response)
+            const response = await axios.post("http://localhost:5050/api/Usuario/IniciarSesion", { Correo: email, Clave: pass }, { withCredentials: true });
+            console.log(response);
         } catch (error) {
+            setMessage(<div class="alert alert-danger" role="alert">Credenciales incorrectos!</div>)
             console.log(error);
         }
-    }
+    };
 
     return (
-        <>
-            <div className='d-flex align-items-center justify-content-center'>
-                <Card style={{ margin: 'auto', width: ' fit-content', height: 'fit-content' }}>
-                    <Card.Body>
-                        <Form>
-                            <h1 className=' text-center'>Hola de nuevo!</h1>
-                            <Form.Label htmlFor='email'>Email</Form.Label>
-                            <Form.Control type="email" id='email' placeholder="Enter email" onChange={e => setEmail(e.target.value)}/>
-                            <Form.Label htmlFor='password'>Password</Form.Label>
-                            <Form.Control type="password" id='password' placeholder="Password" onChange={e => setPass(e.target.value)}/>
-                            <Button color='primary' type='submit' onClick={requestLogin}>Iniciar sesión</Button>
-                        </Form>
-                    </Card.Body>
-                </Card>
+        <div className='d-flex justify-content-center' style={{ height: '100%' }}>
+            <div className="card" style={{ margin: 'auto', width: 'fit-content', height: 'fit-content' }}>
+                <div className="card-body">
+                    <form onSubmit={requestLogin}>
+                        <h1 className='text-center'>Hola de nuevo!</h1>
+                        <div className="mb-3">
+                            <label htmlFor='email' className="form-label">Email</label>
+                            <input type="email" id='email' className="form-control" placeholder="Enter email" onChange={e => setEmail(e.target.value)} />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor='password' className="form-label">Password</label>
+                            <input type="password" id='password' className="form-control" placeholder="Password" onChange={e => setPass(e.target.value)} />
+                        </div>
+                        <button className="btn btn-primary" type="submit">Iniciar sesión</button>
+                    </form>
+                    {message}
+                </div>
             </div>
-        </>
+        </div>
     );
 }
 
-export default FormGroupExample;
+export default Login;

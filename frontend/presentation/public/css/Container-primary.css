@@ -1,0 +1,23 @@
+.navbar {
+    background-color: #311377;
+    color: white;
+}
+
+.navbar i {
+    color: white;
+}
+
+.card-body {
+    background-color: #311377;
+}
+
+.card-body h1,
+.card-body label {
+    color: white;
+
+}
+
+.btn {
+    background-color: #721377;
+
+}
