@@ -10,18 +10,17 @@ function Login() {
 
     const requestLogin = async (e) => {
         e.preventDefault();
+
         if (!email || !pass) {
             setMessage(<div className="alert alert-warning" role="alert">Por favor, complete todos los campos.</div>);
             return;
         }
-
         setLoading(true);
-        setMessage(null); // Clear previous messages
+        setMessage(null);
 
         try {
-            const response = await axios.post("http://localhost:5050/api/Usuario/IniciarSesion", { Correo: email, Clave: pass }, { withCredentials: true });
+            const response = await axios.post("https://backend-streambe.onrender.com/api/Usuario/IniciarSesion", { Correo: email, Clave: pass }, { withCredentials: true });
             console.log(response);
-            // Handle successful login (e.g., redirect or show success message)
         } catch (error) {
             const errorMessage = error.response?.data?.message || "Credenciales incorrectos!";
             setMessage(<div className="alert alert-danger" role="alert">{errorMessage}</div>);
