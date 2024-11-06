@@ -13,7 +13,7 @@ function Header() {
                     </a>
 
                     <div className="nav-item dropdown">
-                        <button role='button' data-bs-toggle="dropdown" style={{ background: 'none', border: 'none', }}>
+                        <button data-bs-toggle="dropdown" style={{ background: 'none', border: 'none', }}>
 
                             <i className="bi bi-person-circle" style={{ fontSize: '1.5rem' }} ></i>
                         </button>
