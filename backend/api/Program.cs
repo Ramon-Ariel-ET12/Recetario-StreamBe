@@ -32,7 +32,7 @@ builder.Services.AddCors(x =>
     {
         builder.AllowAnyHeader()
                .AllowAnyMethod()
-               .WithOrigins("http://localhost:3000")
+               .WithOrigins("http://localhost:3000", "https://fronted-streambe.onrender.com")
                .AllowCredentials();
     });
 });
