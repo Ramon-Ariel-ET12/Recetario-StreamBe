@@ -23,20 +23,6 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult CerrarSesion()
-    {
-        if (Request.Cookies.ContainsKey("AuthToken"))
-        {
-            Response.Cookies.Delete("AuthToken");
-            return Ok();
-        }
-        else
-        {
-            return BadRequest("Error");
-        }
-    }
-
-    [HttpPost]
     [AllowAnonymous]
     public async Task<IActionResult> IniciarSesion([FromBody] IniciarSesionUsuario usuario)
     {
@@ -46,22 +32,15 @@ public class UsuarioController : ControllerBase
             if (logueado != null)
             {
                 var token = GenerateJwtToken(logueado);
-                var cookieOptions = new CookieOptions
-                {
-                    HttpOnly = true,
-                    Secure = false,
-                    Expires = DateTime.Now.AddMinutes(30)
-                };
 
-                Response.Cookies.Append("AuthToken", token, cookieOptions);
-                return Ok("Ya tas logueado!");
+                return Ok(token);
             }
         }
         catch (Exception)
         {
-            return Unauthorized("Credenciales incorrectos");
+            return BadRequest("Error en el backend");
         }
-        return Unauthorized("Credenciales incorrectos");
+        return BadRequest("Credenciales incorrectos");
     }
 
     [HttpPost]
@@ -93,18 +72,15 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> TraerUsuario()
+    public async Task<IActionResult> TraerUsuario([FromQuery] string id)
     {
         try
         {
-            if (Request.Cookies.TryGetValue("AuthToken", out var token))
+            if (id != null)
             {
-                var handler = new JwtSecurityTokenHandler();
-                var jwtToken = handler.ReadJwtToken(token);
+                var IdUsuario = Guid.Parse(id);
 
-                var correo = jwtToken.Claims.FirstOrDefault(c => c.Type == "Correo")!.Value;
-
-                var usuario = await context.TraerUsuarioPorCorreo(correo);
+                var usuario = await context.TraerUsuarioPorId(IdUsuario);
                 var usuarioQueryDto = new ConsultarUsuario
                 {
                     IdUsuario = usuario!.IdUsuario.ToString(),
@@ -113,13 +89,18 @@ public class UsuarioController : ControllerBase
                     Correo = usuario.Correo,
                     FechaCreacion = usuario.FechaCreacion
                 };
+
                 return Ok(usuarioQueryDto);
             }
-            return Unauthorized("No se encontró el token");
+            else
+            {
+                return BadRequest("No se recibió el id");
+
+            }
         }
-        catch (System.Exception)
+        catch (Exception ex)
         {
-            return BadRequest("Error");
+            return BadRequest($"Error: {ex.Message}");
         }
     }
 
@@ -140,6 +121,7 @@ public class UsuarioController : ControllerBase
             issuer: "http://localhost:5050",
             audience: "http://localhost:5050",
             claims: claims,
+            expires: DateTime.Now.AddDays(1),
             signingCredentials: creds);
 
         return new JwtSecurityTokenHandler().WriteToken(token);

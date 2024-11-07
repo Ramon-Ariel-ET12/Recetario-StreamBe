@@ -57,4 +57,10 @@ public class UsuarioService : IUsuarioService
             return BitConverter.ToString(hashBytes).Replace("-", "").ToLowerInvariant();
         }
     }
+
+    public async Task<Usuario?> TraerUsuarioPorId(Guid IdUsuario)
+    {
+        var usuario = await context.TraerUsuario(x => x.IdUsuario == IdUsuario);
+        return usuario?.FirstOrDefault();
+    }
 }

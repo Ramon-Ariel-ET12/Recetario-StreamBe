@@ -31,11 +31,12 @@ builder.Services.AddCors(x =>
     x.AddPolicy("RecetarioPolicy", builder =>
     {
         builder.AllowAnyHeader()
-               .AllowAnyMethod()
-               .WithOrigins("http://localhost:3000", "https://fronted-streambe.onrender.com")
-               .AllowCredentials();
+                .AllowAnyMethod()
+                .WithOrigins("http://localhost:3000", "https://fronted-streambe.onrender.com")
+                .AllowCredentials();
     });
 });
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -48,14 +49,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidIssuer = jwtSettings["Issuer"],
             ValidAudience = jwtSettings["Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]!))
-        };
-        options.Events = new JwtBearerEvents
-        {
-            OnMessageReceived = context =>
-            {
-                context.Token = context.Request.Cookies["AuthToken"];
-                return Task.CompletedTask;
-            }
         };
     });
 
