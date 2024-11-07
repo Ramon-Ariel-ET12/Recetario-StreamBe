@@ -5,6 +5,10 @@ import { useContext } from "react";
 import AuthContext from "../../Authorization";
 
 function Perfil() {
+    const { logueado, logout } = useContext(AuthContext);
+    if (logueado === false) {
+        return;
+    }
     return (
         <div className="nav-item dropdown">
             <button data-bs-toggle="dropdown" style={{ background: 'none', border: 'none', }}>
@@ -13,14 +17,13 @@ function Perfil() {
 
             <ul className="dropdown-menu dropdown-menu-end">
                 <li><a className="dropdown-item" href="/Subir-receta">Subir receta</a></li>
-                <li><a className="dropdown-item" href="/Cerrar-sesion">Cerrar sesión</a></li>
+                <li><a className="dropdown-item" href='/Iniciar-sesion' onClick={logout}>Cerrar sesion</a></li>
             </ul>
         </div>
     )
 }
 
 function Header() {
-    const { logueado } = useContext(AuthContext);
 
     return (
         <header className='sticky-top'>
@@ -29,7 +32,7 @@ function Header() {
                     <a className="navbar-brand" href="/">
                         <i className="bi bi-cookie" style={{ fontSize: '1.5rem' }}></i>
                     </a>
-                    {logueado ? Perfil() : null}
+                    <Perfil />
                 </div>
             </nav>
         </header >
