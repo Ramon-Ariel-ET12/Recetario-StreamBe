@@ -7,12 +7,11 @@
     color: white;
 }
 
-.card-body {
-    background-color: #311377;
+.card {
+    background-color: #311377 !important;
 }
 
-.card-body h1,
-.card-body label {
+.card * {
     color: white;
 
 }
