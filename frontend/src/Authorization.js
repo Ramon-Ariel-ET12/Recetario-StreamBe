@@ -5,6 +5,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [logueado, setLogueado] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const token = localStorage.getItem("AuthToken");
@@ -18,6 +19,7 @@ export const AuthProvider = ({ children }) => {
                 console.error("Error al decodificar el token", error);
             }
         }
+        setLoading(false);
     }, []);
 
     const login = (token) => {
@@ -31,7 +33,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ logueado, login, logout }}>
+        <AuthContext.Provider value={{ logueado, login, logout, loading }}>
             {children}
         </AuthContext.Provider>
     );
