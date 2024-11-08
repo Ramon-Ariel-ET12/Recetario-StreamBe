@@ -1,12 +1,10 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap-icons/font/bootstrap-icons.css';
-import 'bootstrap';
+
 import { useContext } from "react";
 import AuthContext from "../../Authorization";
 
 function Perfil() {
     const { logueado, logout } = useContext(AuthContext);
-    if (logueado === false) {
+    if (!logueado) {
         return;
     }
     return (
