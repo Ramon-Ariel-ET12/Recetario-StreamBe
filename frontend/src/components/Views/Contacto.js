@@ -1,7 +1,7 @@
 import React from 'react'
-import axios from 'axios'
 import { useEffect } from 'react'
 import { jwtDecode } from "jwt-decode"
+import api from '../Servicios/Api'
 
 const Contacto = () => {
   useEffect(() => {
@@ -12,7 +12,7 @@ const Contacto = () => {
         const id = decodedToken.IdUsuario;
         console.log(id);
 
-        const response = axios.get(`https://backend-streambe.onrender.com/api/Usuario/Traerusuario?id=${id}`, {
+        const response = api.get(`/Usuario/Traerusuario?id=${id}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
