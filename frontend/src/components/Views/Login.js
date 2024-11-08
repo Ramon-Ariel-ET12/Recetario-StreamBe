@@ -1,20 +1,23 @@
-import { useState } from 'react';
-import axios from 'axios';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import AuthContext from "../../Authorization";
+import api from '../Servicios/Api';
+import Card from '../Servicios/Card';
 
 function Login() {
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
     const [message, setMessage] = useState(null);
     const [loading, setLoading] = useState(false);
+    const { login, logueado, loading: contextLoading } = useContext(AuthContext);
     const navigate = useNavigate();
-    const { login, logueado } = useContext(AuthContext);
 
-    if (logueado) {
-        navigate("/");
-    }
+    useEffect(() => {
+        if (logueado) {
+            navigate("/");
+        }
+    }, [logueado, navigate]);
 
     const requestLogin = async (e) => {
         e.preventDefault();
@@ -28,19 +31,25 @@ function Login() {
         setMessage(null);
 
         try {
-            const response = await axios.post("https://backend-streambe.onrender.com/api/Usuario/IniciarSesion", { Correo: email, Clave: pass });
-            setLoading(false);
+            const response = await api.post("/Usuario/IniciarSesion", { Correo: email, Clave: pass });
             login(response.data);
         } catch (error) {
             const errorMessage = error.response?.data?.message || "Credenciales incorrectos!";
             setMessage(<div className="alert alert-danger" role="alert">{errorMessage}</div>);
             console.log(error);
         }
+        finally {
+            setLoading(false);
+        }
     };
+
+    if (contextLoading) {
+        return <p>Loading...</p>;
+    }
 
     return (
         <div className='d-flex justify-content-center' style={{ height: '100%' }}>
-            <div className="card" style={{ margin: 'auto', width: 'fit-content', height: 'fit-content' }}>
+            <Card>
                 <div className="card-body">
                     <form onSubmit={requestLogin}>
                         <h1 className='text-center'>Hola de nuevo!</h1>
@@ -57,8 +66,9 @@ function Login() {
                         </button>
                     </form>
                     {message}
+                    <a href='/registrarse'>¿No tienes cuenta? Registrate</a>
                 </div>
-            </div>
+            </Card >
         </div>
     );
 }
