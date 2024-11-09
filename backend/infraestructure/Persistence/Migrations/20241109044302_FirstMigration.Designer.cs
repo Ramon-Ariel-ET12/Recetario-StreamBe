@@ -12,7 +12,7 @@ using infraestructure.Persistence;
 namespace infraestructure.Persistence.Migrations
 {
     [DbContext(typeof(RecetarioDbContext))]
-    [Migration("20241027053336_FirstMigration")]
+    [Migration("20241109044302_FirstMigration")]
     partial class FirstMigration
     {
         /// <inheritdoc />
