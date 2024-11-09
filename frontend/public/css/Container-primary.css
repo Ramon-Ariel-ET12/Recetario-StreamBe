@@ -1,22 +1,43 @@
+:root {
+    --primary-bg-color: #311377;
+    --secondary-bg-color: #721377;
+    --hover-bg-color: #AB24B2;
+    --text-color: white;
+}
+
 .navbar {
-    background-color: #311377;
-    color: white;
+    background-color: var(--primary-bg-color);
+    color: var(--text-color);
+}
+
+.navbar ul {
+    background-color: var(--secondary-bg-color);
+}
+
+.navbar a,
+.navbar i {
+    color: var(--text-color);
+}
+
+.navbar a {
+    font-size: 2vh;
+    text-decoration: none;
 }
 
 .navbar i {
-    color: white;
+    font-size: 4vh;
 }
 
 .card {
-    background-color: #311377 !important;
-}
-
-.card * {
-    color: white;
-
+    background-color: var(--primary-bg-color) !important;
+    color: var(--text-color);
 }
 
 .btn {
-    background-color: #721377;
+    background-color: var(--secondary-bg-color) !important;
+    color: var(--text-color) !important;
+}
 
+.btn:hover {
+    background-color: var(--hover-bg-color) !important;
 }
