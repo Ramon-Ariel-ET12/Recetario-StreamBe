@@ -50,24 +50,22 @@ function Login() {
     return (
         <div className='d-flex justify-content-center' style={{ height: '100%' }}>
             <Card>
-                <div className="card-body">
-                    <form onSubmit={requestLogin}>
-                        <h1 className='text-center'>Hola de nuevo!</h1>
-                        <div className="mb-3">
-                            <label htmlFor='email' className="form-label">Email</label>
-                            <input type="email" id='email' className="form-control" placeholder="Enter email" onChange={e => setEmail(e.target.value)} />
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor='password' className="form-label">Password</label>
-                            <input type="password" id='password' className="form-control" placeholder="Password" onChange={e => setPass(e.target.value)} />
-                        </div>
-                        {message}
-                        <button className="btn btn-primary" type="submit" disabled={loading}>
-                            {loading ? 'Cargando...' : 'Iniciar sesión'}
-                        </button>
-                    </form>
-                    <a href='/registrarse'>¿No tienes cuenta? Registrate</a>
-                </div>
+                <form onSubmit={requestLogin}>
+                    <h1 className='text-center'>Hola de nuevo!</h1>
+                    <div className="mb-3">
+                        <label htmlFor='email' className="form-label">Email</label>
+                        <input type="email" id='email' className="form-control" placeholder="Enter email" onChange={e => setEmail(e.target.value)} />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor='password' className="form-label">Contraseña</label>
+                        <input type="password" id='password' className="form-control" placeholder="Password" onChange={e => setPass(e.target.value)} />
+                    </div>
+                    {message}
+                    <button className="btn" type="submit" disabled={loading}>
+                        {loading ? 'Cargando...' : 'Iniciar sesión'}
+                    </button>
+                </form>
+                <a href='/registrarse'>¿No tienes cuenta? Registrate</a>
             </Card >
         </div>
     );
