@@ -10,7 +10,7 @@ function Perfil() {
     return (
         <div className="nav-item dropdown">
             <button data-bs-toggle="dropdown" style={{ background: 'none', border: 'none', }}>
-                <i className="bi bi-person-circle" style={{ fontSize: '1.5rem' }} ></i>
+                <i className="bi bi-person-circle" ></i>
             </button>
 
             <ul className="dropdown-menu dropdown-menu-end">
@@ -25,13 +25,10 @@ function Header() {
 
     return (
         <header className='sticky-top'>
-            <nav className="navbar navbar-expand-lg">
-                <div className="container">
-                    <a className="navbar-brand" href="/">
-                        <i className="bi bi-cookie" style={{ fontSize: '1.5rem' }}></i>
-                    </a>
-                    <Perfil />
-                </div>
+            <nav className="navbar navbar-expand-lg justify-content-between px-4">
+
+                <a className="navbar-brand" href="/"><i className="bi bi-cookie"></i></a>
+                <Perfil />
             </nav>
         </header >
     );

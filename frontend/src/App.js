@@ -10,6 +10,7 @@ import Login from './components/Views/Login';
 import Contacto from './components/Views/Contacto';
 import Layout from './components/Navegacion/Layout';
 import Registro from './components/Views/Registro';
+import Terminoscondiciones from './components/Views/Terminoscondiciones';
 
 function PrivateRoute({ children }) {
     const { logueado, loading } = useContext(AuthContext);
@@ -35,6 +36,7 @@ function App() {
             <Route path="/" element={<PrivateRoute><Inicio /></PrivateRoute>} />
             <Route path="/Registrarse" element={<Registro />} />
             <Route path="/Iniciar-sesion" element={<Login />} />
+            <Route path="/Terminos-y-condiciones" element={<Terminoscondiciones />} />
             <Route path="/Contacto" element={<PrivateRoute><Contacto /></PrivateRoute>} />
           </Routes>
         </Layout>
