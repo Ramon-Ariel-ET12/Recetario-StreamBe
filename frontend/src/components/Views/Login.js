@@ -4,13 +4,12 @@ import { useContext } from 'react';
 import AuthContext from "../../Authorization";
 import api from '../Servicios/Api';
 import Card from '../Servicios/Card';
-
 function Login() {
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
     const [message, setMessage] = useState(null);
     const [loading, setLoading] = useState(false);
-    const { login, logueado, loading: contextLoading } = useContext(AuthContext);
+    const { login, logueado } = useContext(AuthContext);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -42,10 +41,6 @@ function Login() {
             setLoading(false);
         }
     };
-
-    if (contextLoading) {
-        return <p>Loading...</p>;
-    }
 
     return (
         <div className='d-flex justify-content-center' style={{ height: '100%' }}>

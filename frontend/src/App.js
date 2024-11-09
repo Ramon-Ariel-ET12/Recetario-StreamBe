@@ -11,19 +11,27 @@ import Contacto from './components/Views/Contacto';
 import Layout from './components/Navegacion/Layout';
 import Registro from './components/Views/Registro';
 import Terminoscondiciones from './components/Views/Terminoscondiciones';
+import cookie from './tenor.gif';
 
 function PrivateRoute({ children }) {
-    const { logueado, loading } = useContext(AuthContext);
+  const { logueado, loading } = useContext(AuthContext);
 
-    if (loading) {
-        return <p>Loading...</p>;
-    }
+  if (loading) {
 
-    if (logueado) {
-        return children;
-    } else {
-        return <Navigate to="/iniciar-sesion" />;
-    }
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <img src={cookie} style={{ height: '15vh', }} alt="Loading..." />
+      </div>
+    );
+  }
+
+
+
+  if (logueado) {
+    return children;
+  } else {
+    return <Navigate to="/iniciar-sesion" />;
+  }
 }
 
 function App() {
