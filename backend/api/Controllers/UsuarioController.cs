@@ -28,7 +28,7 @@ public class UsuarioController : ControllerBase
     {
         try
         {
-            var logueado = await context.TraerUsuarioPorCorreoyClave(usuario.Correo!, usuario.Clave!);
+            var logueado = await context.TraerUsuarioPorCorreoyClave(usuario.Correo!.ToLower(), usuario.Clave!);
             if (logueado != null)
             {
                 var token = GenerateJwtToken(logueado);
@@ -120,8 +120,8 @@ public class UsuarioController : ControllerBase
         var token = new JwtSecurityToken(
             issuer: "http://localhost:5050",
             audience: "http://localhost:5050",
+            expires: DateTime.Now.AddMonths(1) ,
             claims: claims,
-            expires: DateTime.Now.AddDays(1),
             signingCredentials: creds);
 
         return new JwtSecurityTokenHandler().WriteToken(token);

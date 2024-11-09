@@ -12,11 +12,7 @@ const Contacto = () => {
         const id = decodedToken.IdUsuario;
         console.log(id);
 
-        const response = api.get(`/Usuario/Traerusuario?id=${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
+        const response = api.get(`/Usuario/Traerusuario?id=${id}`);
         console.log(response);
 
       } catch (error) {

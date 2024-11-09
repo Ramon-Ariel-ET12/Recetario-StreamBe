@@ -34,7 +34,7 @@ function Login() {
             const response = await api.post("/Usuario/IniciarSesion", { Correo: email, Clave: pass });
             login(response.data);
         } catch (error) {
-            const errorMessage = error.response?.data?.message || "Credenciales incorrectos!";
+            const errorMessage = error.response?.data;
             setMessage(<div className="alert alert-danger" role="alert">{errorMessage}</div>);
             console.log(error);
         }
@@ -61,11 +61,11 @@ function Login() {
                             <label htmlFor='password' className="form-label">Password</label>
                             <input type="password" id='password' className="form-control" placeholder="Password" onChange={e => setPass(e.target.value)} />
                         </div>
+                        {message}
                         <button className="btn btn-primary" type="submit" disabled={loading}>
                             {loading ? 'Cargando...' : 'Iniciar sesión'}
                         </button>
                     </form>
-                    {message}
                     <a href='/registrarse'>¿No tienes cuenta? Registrate</a>
                 </div>
             </Card >
