@@ -5,6 +5,15 @@
     --text-color: white;
 }
 
+
+@media (max-width: 576px) {
+    .footers {
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+}
+
 .navbar {
     background-color: var(--primary-bg-color);
     color: var(--text-color);
