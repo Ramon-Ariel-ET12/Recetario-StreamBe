@@ -1,4 +1,4 @@
-﻿namespace core;
+﻿namespace core.Entities;
 
 public class Usuario
 {

@@ -1,5 +1,5 @@
 using System.Linq.Expressions;
-using core;
+using core.Entities;
 
 namespace application.Repositories;
 

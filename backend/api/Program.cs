@@ -1,7 +1,8 @@
 using System.Text;
-using infraestructure.Persistence;
+using infraestructure.Mapster;
 using infraestructure.Repositories;
 using infraestructure.Services;
+using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -20,6 +21,8 @@ builder.Services.AddServices();
 builder.Services.AddRepositories();
 
 builder.Services.AddDbContext<RecetarioDbContext>(x => x.UseNpgsql(connection));
+
+MapsterConfiguration.RegisterMappings();
 
 var options = new DbContextOptionsBuilder<RecetarioDbContext>();
 options.UseNpgsql(connection);

@@ -1,4 +1,4 @@
-using core;
+using core.Entities;
 
 namespace application.Services;
 

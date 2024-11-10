@@ -1,4 +1,4 @@
-namespace core;
+namespace core.Entities;
 
 public class Receta
 {
@@ -7,6 +7,7 @@ public class Receta
     public string Descripcion { get; set; }
     public List<Ingrediente> Ingrediente { get; set; } = [];
     public List<Imagen> Imagen { get; set; } = [];
+    public List<Instruccion> Instruccion { get; set; } = [];
     public DateTime FechaCreacion { get; set; } = DateTime.UtcNow;
 
     public Guid IdUsuario { get; set; }

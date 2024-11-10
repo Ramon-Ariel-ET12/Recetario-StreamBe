@@ -2,7 +2,7 @@ using System.Security.Cryptography;
 using System.Text;
 using application.Repositories;
 using application.Services;
-using core;
+using core.Entities;
 
 namespace infraestructure.Services;
 

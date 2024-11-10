@@ -1,8 +1,8 @@
-using infraestructure.Persistence;
 using application.Repositories;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using core;
+using core.Entities;
+using Infrastructure.Persistence;
 
 namespace infraestructure.Repositories;
 

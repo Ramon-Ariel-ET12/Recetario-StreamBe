@@ -1,4 +1,4 @@
-using core;
+using core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -9,9 +9,8 @@ public class ImagenConfiguration : IEntityTypeConfiguration<Imagen>
     public void Configure(EntityTypeBuilder<Imagen> builder)
     {
         builder.HasKey(x => x.IdImagen);
-        builder.Property(x => x.IdImagen).IsRequired();
         builder.Property(x => x.Datos).IsRequired();
-        builder.Property(x => x.Formato).IsRequired();
+        builder.Property(x => x.Formato).IsRequired().HasMaxLength(20);
     }
 
 }

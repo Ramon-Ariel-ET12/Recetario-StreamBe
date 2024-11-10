@@ -2,7 +2,9 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using application.Services;
-using core;
+using core.DTO;
+using core.Entities;
+using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -24,28 +26,36 @@ public class UsuarioController : ControllerBase
 
     [HttpPost]
     [AllowAnonymous]
-    public async Task<IActionResult> IniciarSesion([FromBody] IniciarSesionUsuario usuario)
+    public async Task<IActionResult> IniciarSesion([FromBody] LoginDto loginDto)
     {
         try
         {
-            var logueado = await context.TraerUsuarioPorCorreoyClave(usuario.Correo!.ToLower(), usuario.Clave!);
+            var existe = await context.TraerUsuarioPorCorreo(loginDto.Correo!.ToLower());
+            if (existe == null)
+                return BadRequest("El usuario no existe");
+
+            var logueado = await context.TraerUsuarioPorCorreoyClave(loginDto.Correo!.ToLower(), loginDto.Clave!);
             if (logueado != null)
             {
                 var token = GenerateJwtToken(logueado);
 
                 return Ok(token);
             }
+            else
+            {
+                return BadRequest("Credenciales incorrectos");
+            }
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return BadRequest("Error en el backend");
+            Console.WriteLine(ex.Message);
+            return BadRequest("Error en el backend: " + ex.Message);
         }
-        return BadRequest("Credenciales incorrectos");
     }
 
     [HttpPost]
     [AllowAnonymous]
-    public async Task<IActionResult> CrearUsuario([FromBody] RegistrarUsuario usuario)
+    public async Task<IActionResult> CrearUsuario([FromBody] UsuarioCommandDto usuario)
     {
         try
         {
@@ -54,8 +64,8 @@ public class UsuarioController : ControllerBase
                 var existe = await context.TraerUsuarioPorCorreo(usuario.Correo!);
                 if (existe == null)
                 {
-                    var newuser = new Usuario() { Nombre = usuario.Nombre, Apellido = usuario.Apellido, Correo = usuario.Correo, Clave = usuario.Clave };
-                    await context.RegistrarUsuario(newuser);
+                    var usuarionuevo = usuario.Adapt<Usuario>();
+                    await context.RegistrarUsuario(usuarionuevo);
                     return Ok("Usuario Creado");
                 }
                 else
@@ -63,11 +73,15 @@ public class UsuarioController : ControllerBase
                     return BadRequest($"Ya existe ese correo: {usuario.Correo}");
                 }
             }
-            return Unauthorized("Error");
+            else
+            {
+                return BadRequest("Complete los datos");
+            }
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return Unauthorized("Error");
+            Console.WriteLine(ex.Message);
+            return BadRequest("Error en el backend: " + ex.Message);
         }
     }
 
@@ -81,14 +95,9 @@ public class UsuarioController : ControllerBase
                 var IdUsuario = Guid.Parse(id);
 
                 var usuario = await context.TraerUsuarioPorId(IdUsuario);
-                var usuarioQueryDto = new ConsultarUsuario
-                {
-                    IdUsuario = usuario!.IdUsuario.ToString(),
-                    Nombre = usuario.Nombre,
-                    Apellido = usuario.Apellido,
-                    Correo = usuario.Correo,
-                    FechaCreacion = usuario.FechaCreacion
-                };
+
+
+                var usuarioQueryDto = usuario.Adapt<UsuarioQueryDto>();
 
                 return Ok(usuarioQueryDto);
             }
@@ -100,7 +109,8 @@ public class UsuarioController : ControllerBase
         }
         catch (Exception ex)
         {
-            return BadRequest($"Error: {ex.Message}");
+            Console.WriteLine(ex.Message);
+            return BadRequest("Error en el backend: " + ex.Message);
         }
     }
 
@@ -120,31 +130,17 @@ public class UsuarioController : ControllerBase
         var token = new JwtSecurityToken(
             issuer: "http://localhost:5050",
             audience: "http://localhost:5050",
-            expires: DateTime.Now.AddMonths(1) ,
+            expires: DateTime.Now.AddMonths(1),
             claims: claims,
             signingCredentials: creds);
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 }
-public class IniciarSesionUsuario
-{
-    public string? Correo { get; set; }
-    public string? Clave { get; set; }
-}
-public class RegistrarUsuario
-{
-    public string? Nombre { get; set; }
-    public string? Apellido { get; set; }
-    public string? Correo { get; set; }
-    public string? Clave { get; set; }
-}
 
-public class ConsultarUsuario
+
+public class LoginDto
 {
-    public string? IdUsuario { get; set; }
-    public string? Nombre { get; set; }
-    public string? Apellido { get; set; }
     public string? Correo { get; set; }
-    public DateTime? FechaCreacion { get; set; }
+    public string? Clave { get; set; }
 }

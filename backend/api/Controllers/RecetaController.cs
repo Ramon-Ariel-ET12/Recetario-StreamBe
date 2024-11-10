@@ -1,5 +1,7 @@
 using application.Services;
-using core;
+using core.DTO;
+using core.Entities;
+using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,57 +20,49 @@ public class RecetaController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CrearReceta([FromBody] CrearReceta nuevareceta)
+    public async Task<IActionResult> CrearReceta([FromBody] RecetaCommandDto nuevareceta)
     {
-        
-        if (nuevareceta == null || string.IsNullOrEmpty(nuevareceta.Nombre) || string.IsNullOrEmpty(nuevareceta.Descripcion) || nuevareceta.Ingrediente == null || nuevareceta.Imagen == null || nuevareceta.Imagen.Count > 2)
+        try
         {
-            return BadRequest("Datos de receta inválidos.");
+            if (nuevareceta == null ||
+            string.IsNullOrEmpty(nuevareceta.Nombre) ||
+            string.IsNullOrEmpty(nuevareceta.Descripcion) ||
+                nuevareceta.Ingrediente == null ||
+                nuevareceta.Imagen == null ||
+                nuevareceta.Imagen.Count > 1)
+            {
+                return BadRequest("Rellene los campos.");
+            }
+
+            var receta = nuevareceta.Adapt<Receta>();
+
+            await context.CrearReceta(receta);
+
+            return Ok("Receta creada exitosamente.");
         }
-
-        Receta receta = new()
+        catch (Exception ex)
         {
-            Nombre = nuevareceta.Nombre,
-            Descripcion = nuevareceta.Descripcion,
-            Ingrediente = nuevareceta.Ingrediente,
-            Imagen = nuevareceta.Imagen,
-            IdUsuario = Guid.Parse(nuevareceta.IdUsuario!)
-        };
-
-        await context.CrearReceta(receta);
-        return Ok("Receta creada exitosamente.");
+            Console.WriteLine(ex.Message);
+            return BadRequest("Error en el backend: " + ex.Message);
+        }
     }
+
 
     [HttpGet]
     public async Task<IActionResult> TraerRecetas()
     {
-        var recetas = await context.TraerReceta();
-
-        var recetaconlaimagen = recetas.Select(receta => new
+        try
         {
-            receta.IdReceta,
-            receta.Nombre,
-            receta.Descripcion,
-            receta.FechaCreacion,
-            Ingredientes = receta.Ingrediente,
-            Imagenes = receta.Imagen.Select(imagen => new
-            {
-                imagen.IdImagen,
-                Base64 = Convert.ToBase64String(imagen.Datos),
-                imagen.Formato
-            }).ToList(),
-        });
+            var recetas = await context.TraerReceta();
 
-        return Ok(recetaconlaimagen); // <img src={`data:image/png;base64,${Base64}`} alt="Imagen de la receta" />
+            var recetaconlaimagen = recetas.Adapt<List<RecetaQueryDto>>();
+
+            return Ok(recetaconlaimagen);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            return BadRequest("Error en el backend: " + ex.Message);
+        }
     }
-}
-
-public class CrearReceta
-{
-    public string? Nombre { get; set; }
-    public string? Descripcion { get; set; }
-    public List<Ingrediente> Ingrediente { get; set; } = [];
-    public List<Imagen> Imagen { get; set; } = [];
-
-    public string? IdUsuario { get; set; }
 }
