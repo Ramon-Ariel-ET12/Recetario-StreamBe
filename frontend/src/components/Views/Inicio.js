@@ -2,6 +2,7 @@ import React from 'react'
 import Card from '../Servicios/Card'
 import ReactPlayer from 'react-player'
 import SearchBar from '../Servicios/SearchBar'
+import Recetas from '../Servicios/ListadeReceta'
 
 const Inicio = () => {
   return (
@@ -31,13 +32,7 @@ const Inicio = () => {
       <Card style={{ width: '90%', margin: '2rem auto', padding: '1.5rem', lineHeight: '1.6' }}>
         <SearchBar />
       </Card>
-      <h1>Inicio</h1>
-      <h1>Inicio</h1>
-      <h1>Inicio</h1>
-      <h1>Inicio</h1>
-      <h1>Inicio</h1>
-      <h1>Inicio</h1>
-
+      <Recetas />
     </div>
   )
 }
