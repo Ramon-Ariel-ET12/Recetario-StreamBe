@@ -11,21 +11,17 @@ import Contacto from './components/Views/Contacto';
 import Layout from './components/Navegacion/Layout';
 import Registro from './components/Views/Registro';
 import Terminoscondiciones from './components/Views/Terminoscondiciones';
-import cookie from './tenor.gif';
+import { SubirReceta } from './components/Views/SubirReceta';
+import Loading from './components/Servicios/Loading';
+import Receta from './components/Views/Receta';
 
 function PrivateRoute({ children }) {
   const { logueado, loading } = useContext(AuthContext);
 
   if (loading) {
 
-    return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <img src={cookie} style={{ height: '15vh', }} alt="Loading..." />
-      </div>
-    );
+    return Loading();
   }
-
-
 
   if (logueado) {
     return children;
@@ -46,6 +42,8 @@ function App() {
             <Route path="/Iniciar-sesion" element={<Login />} />
             <Route path="/Terminos-y-condiciones" element={<Terminoscondiciones />} />
             <Route path="/Contacto" element={<PrivateRoute><Contacto /></PrivateRoute>} />
+            <Route path="/Subir-receta" element={<PrivateRoute><SubirReceta /></PrivateRoute>} />
+            <Route path="/Receta/:id" element={<PrivateRoute><Receta /></PrivateRoute>} />
           </Routes>
         </Layout>
       </Router>
