@@ -4,71 +4,86 @@ function TerminosCondiciones() {
     return (
         <>
             <Card style={{ width: '70%', margin: '2rem auto', padding: '1.5rem', lineHeight: '1.6' }}>
-                <h2 className="text-center mb-4">Términos y Condiciones</h2>
+                <h1 className="text-center mb-4">Términos y Condiciones de Uso de Recetario</h1>
                 <section>
-                    <h3>1. Aceptación de Términos</h3>
+                    <h2>1. Aceptación de los Términos</h2>
                     <p>
-                        Al acceder y utilizar nuestro sitio web para crear o visualizar recetas, usted acepta cumplir con estos términos y condiciones.
-                        Si no está de acuerdo con alguna parte de estos términos, le exhortamos a que no utilice nuestra plataforma.
+                    Al acceder y utilizar Recetario (en adelante, el "Sitio"), el usuario (en adelante, el "Usuario") acepta quedar vinculado por los presentes Términos y Condiciones de Uso (en adelante, los "Términos"). Si el Usuario no está de acuerdo con alguna de las disposiciones de estos Términos, deberá abstenerse de utilizar el Sitio.
                     </p>
                 </section>
 
                 <section>
-                    <h3>2. Creación de Recetas</h3>
-                    <h4>2.1. Responsabilidad del Usuario</h4>
+                    <h2>2. Uso del Sitio</h2>
+                    <h4>2.1. Propósito del Sitio:</h4>
                     <p>
-                        Los usuarios son responsables de la exactitud y veracidad de las recetas que publiquen en el sitio. Al enviar una receta, el usuario garantiza que posee todos los derechos sobre el contenido y que este no infringe derechos de propiedad intelectual de terceros.
+                    Recetario es una plataforma en línea diseñada para facilitar el intercambio de recetas culinarias entre usuarios residentes en Argentina.
                     </p>
 
-                    <h4>2.2. Contenido Prohibido</h4>
+                    <h4>2.2. Licencia de Uso:</h4>
                     <p>
-                        Queda estrictamente prohibido publicar recetas que contengan información falsa, engañosa, o irreal, incluyendo recetas no probadas, que incluyan ingredientes ilegales, o que promuevan prácticas inseguras.
-                    </p>
-                </section>
-
-                <section>
-                    <h3>3. Visualización de Recetas</h3>
-                    <p>
-                        Los usuarios pueden acceder a una variedad de recetas publicadas por la comunidad, aunque la validez de estas recetas no está garantizada. Recomendamos usar su propio criterio al seguir cualquier receta.
+                    Recetario otorga al Usuario una licencia limitada, no exclusiva, intransferible y revocable para acceder y utilizar el Sitio, siempre y cuando cumpla con estos Términos.
                     </p>
                 </section>
 
                 <section>
-                    <h3>4. Eliminación de Recetas</h3>
-                    <h4>4.1. Política de Revisión</h4>
+                    <h2>3. Contenido del Usuario</h2>
+
+                    <h4>3.1. Publicación de Recetas:</h4>
                     <p>
-                        Nos reservamos el derecho de revisar y eliminar cualquier receta publicada en el sitio. Si una receta se considera inapropiada o infringe normas, será retirada inmediatamente.
+                    El Usuario es el único responsable del contenido que publica en el Sitio. Al publicar una receta, el Usuario declara y garantiza que: (I) posee todos los derechos sobre el contenido; (II) el contenido es original o que cuenta con la autorización necesaria para su uso; y (III) el contenido no infringe ningún derecho de terceros, incluyendo, pero no limitado a, derechos de autor, marcas comerciales, secretos comerciales o derechos de privacidad.
                     </p>
 
-                    <h4>4.2. Notificación al Usuario</h4>
+                    <h4>3.2. Contenido Prohibido:</h4>
                     <p>
-                        El usuario cuyo contenido sea eliminado recibirá una notificación a través del medio proporcionado durante la creación de la receta. En casos graves, la eliminación puede ocurrir sin aviso previo.
+                    Está estrictamente prohibido publicar contenido que sea falso, engañoso, difamatorio, obsceno, ilegal o que infrinja los derechos de terceros. Asimismo, queda prohibido publicar recetas que promuevan prácticas culinarias inseguras o que incluyan ingredientes ilegales.
+                    </p>
+
+                </section>
+
+                <section>
+                    <h2>4. Derechos de Propiedad Intelectual</h2>
+                    <p>
+                    Todos los derechos de propiedad intelectual sobre el Sitio y su contenido, incluyendo, pero no limitado a, marcas comerciales, logotipos, diseños, textos, imágenes y software, son propiedad de Nosotros o de nuestros licenciantes.
                     </p>
                 </section>
 
                 <section>
-                    <h3>5. Modificaciones a los Términos</h3>
+                    <h2>5. Eliminación de Contenido</h2>
                     <p>
-                        Nos reservamos el derecho de modificar estos términos en cualquier momento. Los cambios serán efectivos desde su publicación en el sitio, por lo que recomendamos revisarlos periódicamente.
+                    Nos reservamos el derecho, a nuestra discreción, de eliminar cualquier contenido que infrinja estos Términos o que consideremos inapropiado.
                     </p>
                 </section>
 
                 <section>
-                    <h3>6. Aceptación Continua</h3>
+                    <h2>6. Modificación de los Términos</h2>
                     <p>
-                        El uso continuo del sitio después de cambios implica aceptación de estos. Es responsabilidad del usuario mantenerse informado.
+                    Nos reservamos el derecho de modificar estos Términos en cualquier momento. Los cambios serán efectivos a partir de su publicación en el Sitio. Se recomienda al Usuario revisar periódicamente estos Términos para mantenerse informado de cualquier actualización.
                     </p>
                 </section>
 
                 <section>
-                    <h3>7. Legislación Aplicable</h3>
+                    <h2>7. Limitación de Responsabilidad</h2>
                     <p>
-                        Estos términos se rigen por las leyes del país donde se encuentra registrado el sitio, sin considerar disposiciones de conflicto de leyes.
+                    En la medida máxima permitida por la ley aplicable, Nosotros no seremos responsables por ningún daño directo, indirecto, incidental, consecuente o punitivo resultante del uso o la imposibilidad de usar el Sitio.
+                    </p>
+                </section>
+
+                <section>
+                    <h2>8. Ley Aplicable y Jurisdicción</h2>
+                    <p>
+                    Estos Términos se regirán e interpretarán de conformidad con las leyes de (Argentina). Cualquier disputa que surja en relación con estos Términos se someterá a la jurisdicción exclusiva de los tribunales de (Ciudad Autonoma de Buenos Aires, Argentina).
+                    </p>
+                </section>
+
+                <section>
+                    <h2>9. Acuerdo Completo</h2>
+                    <p>
+                    Estos Términos constituyen el acuerdo completo entre el Usuario y Nosotros y reemplazan a cualquier comunicación o acuerdo previo, ya sea oral o escrito.
                     </p>
                 </section>
 
                 <p className="text-center mt-4">
-                    Al usar nuestro sitio, usted reconoce haber leído, entendido y aceptado estos términos y condiciones en su totalidad.
+                Al utilizar el Sitio, el Usuario reconoce haber leído, comprendido y aceptado íntegramente estos Términos y Condiciones de Uso.
                 </p>
             </Card>
         </>

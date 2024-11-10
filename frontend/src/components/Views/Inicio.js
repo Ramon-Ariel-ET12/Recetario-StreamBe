@@ -1,6 +1,7 @@
 import React from 'react'
 import Card from '../Servicios/Card'
 import ReactPlayer from 'react-player'
+import SearchBar from '../Servicios/SearchBar'
 
 const Inicio = () => {
   return (
@@ -12,7 +13,7 @@ const Inicio = () => {
               <div className="card-body" style={{color: 'white'}}>
                 <h5 className="card-title">Recetario</h5>
                 <p className="card-text ">
-                Es una plataforma colaborativa donde los usuarios pueden compartir y descubrir recetas caseras de la comunidad. Con una interfaz amigable, permite explorar recetas por categorías y niveles de dificultad. Cada receta refleja la creatividad de sus creadores, haciendo de Recetarios un espacio auténtico y accesible para todos los amantes de la cocina.
+                Es una plataforma colaborativa donde los usuarios pueden compartir y descubrir recetas caseras de la comunidad. Con una interfaz amigable, permite explorar recetas por categorías y niveles de dificultad. Cada receta refleja la creatividad de sus creadores, haciendo de Recetario un espacio auténtico y accesible para todos los amantes de la cocina.
                 </p>
               </div>
             </div>
@@ -26,6 +27,9 @@ const Inicio = () => {
             </div>
           </div>
         </div>
+      </Card>
+      <Card style={{ width: '90%', margin: '2rem auto', padding: '1.5rem', lineHeight: '1.6' }}>
+        <SearchBar />
       </Card>
       <h1>Inicio</h1>
       <h1>Inicio</h1>
