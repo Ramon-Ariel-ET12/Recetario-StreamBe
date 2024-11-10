@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import api from "../Servicios/Api";
+import { RegistrarUsuarioApi } from "../Servicios/ConsumoApi";
 import Card from "../Servicios/Card";
 import { useState } from "react";
+import Button from "../Servicios/Button";
+import { AlertWarning } from "../Servicios/AlertMessage";
 
 function Registro() {
     const [nombre, setNombre] = useState('');
@@ -13,26 +15,22 @@ function Registro() {
     const [isChecked, setIsChecked] = useState(false);
     const navigate = useNavigate();
 
-    const requestRegister = async (e) => {
+    const RegistrarUsuario = async (e) => {
         e.preventDefault();
+        setLoading(true);
+        setMessage(null);
+
         if (!nombre || !apellido || !email || !password) {
-            setMessage(<div className="alert alert-danger" role="alert">{"Todos los campos son obligatorios"}</div>);
+            setMessage(AlertWarning("Todos los campos son obligatorios"));
             return;
-        } else {
-            setLoading(true);
-            setMessage(null);
         }
 
         try {
-            const response = await api.post("/Usuario/CrearUsuario", {
-                nombre, apellido, correo: email, clave: password
-            });
-            if (response.status === 200) {
-                navigate("/Iniciar-sesion");
-            }
+            await RegistrarUsuarioApi(nombre, apellido, email, password);
+            navigate("/Iniciar-sesion");
         } catch (error) {
             const errorMessage = error.response?.data || "Error al registrarse.";
-            setMessage(<div className="alert alert-danger" role="alert">{errorMessage}</div>);
+            setMessage(AlertWarning(errorMessage));
             console.log(error);
         } finally {
             setLoading(false);
@@ -43,7 +41,7 @@ function Registro() {
         <>
             <Card style={{ margin: 'auto' }}>
                 <h1 className='text-center'>Bienvenido!</h1>
-                <form onSubmit={requestRegister}>
+                <form onSubmit={RegistrarUsuario}>
                     <div className="row mb-3">
                         <div className="col-md-6">
                             <label htmlFor='nombre' className="form-label">Nombre</label>
@@ -72,9 +70,9 @@ function Registro() {
 
                     {message}
 
-                    <button className="btn" type="submit" disabled={loading || !isChecked}>
-                        {loading ? "Cargando..." : "Iniciar sesión"}
-                    </button>
+                    <Button type={'submit'} disabled={loading || !isChecked}>
+                        {loading ? "Cargando..." : "Registrarse"}
+                    </Button>
                 </form>
                 <a href="/iniciar-sesion">Tengo cuenta, iniciar sesión</a>
             </Card>

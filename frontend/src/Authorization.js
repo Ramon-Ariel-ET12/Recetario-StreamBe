@@ -22,6 +22,20 @@ export const AuthProvider = ({ children }) => {
         setLoading(false);
     }, []);
 
+    const ObtenerUsuario = () => {
+        const token = localStorage.getItem("AuthToken");
+        if (token) {
+            try {
+                const decoded = jwtDecode(token);
+                if (decoded.IdUsuario && decoded.IdUsuario !== "") {
+                    setLogueado(true);
+                    return decoded;
+                }
+            } catch (error) {
+                console.error("Error al decodificar el token", error);
+            }
+        }
+    }
     const login = (token) => {
         localStorage.setItem("AuthToken", token);
         setLogueado(true);
@@ -33,7 +47,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ logueado, login, logout, loading }}>
+        <AuthContext.Provider value={{ logueado, ObtenerUsuario, login, logout, loading }}>
             {children}
         </AuthContext.Provider>
     );

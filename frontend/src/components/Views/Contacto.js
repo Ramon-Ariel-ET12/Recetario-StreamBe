@@ -1,18 +1,17 @@
 import React from 'react'
 import { useEffect } from 'react'
 import { jwtDecode } from "jwt-decode"
-import api from '../Servicios/Api'
+import { TraerUsuarioApi } from '../Servicios/ConsumoApi'
 
 const Contacto = () => {
   useEffect(() => {
-    async function fetchData() {
+    async function TraerUsuario() {
       try {
         var token = localStorage.getItem("AuthToken");
         const decodedToken = jwtDecode(token);
         const id = decodedToken.IdUsuario;
-        console.log(id);
 
-        const response = api.get(`/Usuario/Traerusuario?id=${id}`);
+        const response = await TraerUsuarioApi(id);
         console.log(response);
 
       } catch (error) {
@@ -20,7 +19,7 @@ const Contacto = () => {
 
       }
     }
-    fetchData();
+    TraerUsuario();
   }, []);
   return (
     <div>
