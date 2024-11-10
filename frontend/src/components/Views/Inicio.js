@@ -20,7 +20,7 @@ const Inicio = () => {
                 <ReactPlayer
                   url="https://youtu.be/AhaxAbtuy_E"
                   width={'100%'}
-                  height={'100%'}
+                  height={'250px'}
                   controls
                 />
             </div>
