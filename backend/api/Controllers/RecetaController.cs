@@ -24,16 +24,48 @@ public class RecetaController : ControllerBase
     {
         try
         {
-            if (nuevareceta == null ||
-            string.IsNullOrEmpty(nuevareceta.Nombre) ||
-            string.IsNullOrEmpty(nuevareceta.Descripcion) ||
-                nuevareceta.Ingrediente == null ||
-                nuevareceta.Imagen == null ||
-                nuevareceta.Imagen.Count == 0)
+            if (nuevareceta == null)
             {
                 return BadRequest("Rellene los campos.");
             }
-
+            if (string.IsNullOrEmpty(nuevareceta.Nombre))
+            {
+                return BadRequest("Ingrese el nombre de la receta.");
+            }
+            if (string.IsNullOrEmpty(nuevareceta.Descripcion))
+            {
+                return BadRequest("Ingrese la descripcion de la receta.");
+            }
+            if (nuevareceta.Ingrediente == null || nuevareceta.Ingrediente.Count == 0)
+            {
+                return BadRequest("Ingrese los ingredientes de la receta.");
+            }
+            if (nuevareceta.Instruccion == null || nuevareceta.Instruccion.Count == 0)
+            {
+                return BadRequest("Ingrese las intrucciones de la receta.");
+            }
+            if (nuevareceta.Imagen == null || nuevareceta.Imagen.Count == 0)
+            {
+                return BadRequest("Ingrese el imagen de la receta.");
+            }
+            foreach (var x in nuevareceta.Ingrediente)
+            {
+                if (string.IsNullOrEmpty(x.Cantidad))
+                {
+                    return BadRequest("Ingrese el campo cantidad de ingrediente de la receta.");
+                }
+                if (string.IsNullOrEmpty(x.Descripcion))
+                {
+                    return BadRequest("Ingrese el campo descripcion de ingrediente de la receta.");
+                }
+            }
+            foreach (var x in nuevareceta.Instruccion)
+            {
+                if (string.IsNullOrEmpty(x.Explicacion))
+                {
+                    return BadRequest("Ingrese la explicacion de intrucciones de la receta.");
+                }
+            }
             var receta = nuevareceta.Adapt<Receta>();
 
             await context.CrearReceta(receta);

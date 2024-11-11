@@ -15,7 +15,7 @@ export function Recetas() {
         async function TraerRecetas() {
             try {
                 const response = await TraerRecetasApi(salteo);
-                if (response.data.length < 10) {
+                if (response.data.length < 12) {
                     setHasMore(false);
                 }
                 setRecetas((x) => {
@@ -26,6 +26,7 @@ export function Recetas() {
                     return [...x, ...newRecetas];
                 });
             } catch (error) {
+                document.location.reload();
                 console.error("Error al obtener recetas:", error);
             } finally {
                 setLoadingButton(false);

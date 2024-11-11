@@ -5,6 +5,7 @@ import SearchBar from '../Servicios/SearchBar'
 import Recetas from '../Servicios/ListadeReceta'
 const Inicio = () => {
   document.title = "Inicio";
+  
   return (
     <div style={{ margin: 'auto', maxWidth: '90%' }}>
       <Card style={{ width: '100%', margin: '2rem auto', padding: '1.5rem', lineHeight: '1.6' }}>

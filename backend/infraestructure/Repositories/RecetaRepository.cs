@@ -23,18 +23,18 @@ public class RecetaRepository : IRecetaRepository
     {
         if (expression != null)
         {
-            return await context.Receta.Include(x => x.Ingrediente).Include(x => x.Imagen).Include(x => x.Usuario).Include(x => x.Instruccion)
+            return await context.Receta.Include(x => x.Ingrediente).Include(x => x.Imagen).Include(x => x.Usuario).Include(x => x.Instruccion.OrderBy(i => i.Paso))
                                         .AsNoTracking()
                                         .Where(expression)
                                         .Skip(salteo)
-                                        .Take(10)
+                                        .Take(12)
                                         .OrderByDescending(x => x.FechaCreacion)
                                         .ToListAsync();
         }
-        return await context.Receta.Include(x => x.Ingrediente).Include(x => x.Imagen).Include(x => x.Usuario).Include(x => x.Instruccion)
+        return await context.Receta.Include(x => x.Ingrediente).Include(x => x.Imagen).Include(x => x.Usuario).Include(x => x.Instruccion.OrderBy(i => i.Paso))
                                     .AsNoTracking()
                                     .Skip(salteo)
-                                    .Take(10)
+                                    .Take(12)
                                     .OrderByDescending(x => x.FechaCreacion)
                                     .ToListAsync();
     }

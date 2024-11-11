@@ -6,15 +6,17 @@ import Button from "../Servicios/Button";
 import { AlertSucces, AlertWarning } from "../Servicios/AlertMessage";
 
 export function SubirReceta() {
-    document.title= "Cual será la receta";
+    document.title = "Cual será la receta";
     const [loading, setLoading] = useState(false);
     const { ObtenerUsuario } = useContext(AuthContext);
     const [ingredientes, setIngredientes] = useState([{ cantidad: "", unidadMedida: "", descripcion: "" }]);
-    const [instrucciones, setInstrucciones] = useState([{ paso: "", explicacion: "" }]);
+    const [instrucciones, setInstrucciones] = useState([{ paso: 1, explicacion: "" }]);
     const [imagen, setImagen] = useState(null);
     const [nombre, setNombre] = useState("");
     const [message, setMessage] = useState(null);
     const [descripcion, setDescripcion] = useState("");
+    const [conteo, setConteo] = useState(2);
+
 
     const manejarImagen = (e) => {
         const archivo = e.target.files[0];
@@ -46,7 +48,8 @@ export function SubirReceta() {
             newList.splice(cell, 1);
         }
         if ((newList[cell].paso || newList[cell].explicacion) && cell === list.length - 1) {
-            newList.push({ paso: "", explicacion: "" });
+            setConteo(conteo+1);
+            newList.push({ paso: conteo, explicacion: "" });
         }
         setList(newList);
     };
@@ -59,7 +62,7 @@ export function SubirReceta() {
         const usuario = ObtenerUsuario();
 
         const ingredientesConCantidadValida = ingredientes
-            .filter(ingrediente => ingrediente.cantidad && ingrediente.unidadMedida && ingrediente.descripcion);
+            .filter(ingrediente => ingrediente.cantidad && ingrediente.descripcion);
 
         const instruccionesValidas = instrucciones
             .filter(instruccion => instruccion.paso && instruccion.explicacion);
@@ -82,8 +85,8 @@ export function SubirReceta() {
             setMessage(AlertSucces("Tu receta se ha subido correctamente."));
             setNombre("");
             setDescripcion("");
-            setInstrucciones([{ cantidad: "", unidadMedida: "", descripcion: "" }]);
-            setIngredientes([{ paso: "", explicacion: "" }]);
+            setInstrucciones([{ paso: "", explicacion: "" }]);
+            setIngredientes([{ cantidad: "", unidadMedida: "", descripcion: "" }]);
             setImagen(null);
         } catch (error) {
             const errorMessage = error.response?.data || "Error en subir la receta.";
@@ -205,6 +208,7 @@ export function SubirReceta() {
                                 <tr key={cell}>
                                     <td>
                                         <input
+                                            disabled={true}
                                             type="text"
                                             className="form-control"
                                             placeholder="Paso"

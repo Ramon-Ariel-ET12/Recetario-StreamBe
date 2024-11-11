@@ -19,7 +19,6 @@ function PrivateRoute({ children }) {
   const { logueado, loading } = useContext(AuthContext);
 
   if (loading) {
-
     return Loading();
   }
 

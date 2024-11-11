@@ -30,7 +30,9 @@ export function Receta() {
     if (loading) {
         return <Loading />;
     }
-
+    if (!receta) {
+        return (<><p>No se encontró</p></>);
+    }
     document.title = receta.nombre;
     return (
         <div style={{ margin: 'auto', width: '90%' }}>
@@ -60,7 +62,7 @@ export function Receta() {
                         <ul>
                             {receta.instruccion.map((x, index) => (
                                 <li key={index}>
-                                    {`Paso ${x.paso}:  ${x.explicacion}`}
+                                    {`Paso ${x.paso}: ${x.explicacion}`}
                                 </li>
                             ))}
                         </ul>

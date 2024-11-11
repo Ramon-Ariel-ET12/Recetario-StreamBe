@@ -9,7 +9,7 @@ public class ImagenMapster : IRegister
     public void Register(TypeAdapterConfig config)
     {
         config.NewConfig<ImagenCommandDto, Imagen>()
-                .Map(destino => destino.Datos, origen => Convert.FromBase64String(origen.Datos))
+                .Map(destino => destino.Datos, origen => Convert.FromBase64String(origen!.Datos!))
                 .Map(destino => destino.Formato, origen => origen.Formato);
 
         config.NewConfig<Imagen, ImagenQueryDto>()

@@ -9,8 +9,8 @@ export const IniciarSesionApi = async (correo, clave) => {
     return await api.post("/Usuario/IniciarSesion", { correo, clave });
 }
 
-export const TraerRecetasApi = async (page = 0) => {
-        return  await api.get(`/Receta/TraerRecetas?salteo=${page * 10}`);
+export const TraerRecetasApi = async (salteo = 0) => {
+        return  await api.get(`/Receta/TraerRecetas?salteo=${salteo * 10}`);
 }
 
 export const TraerRecetasPorIdApi = async (IdReceta) => {
