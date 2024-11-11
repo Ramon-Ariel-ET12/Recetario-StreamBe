@@ -19,7 +19,6 @@ public class UsuarioMapster : IRegister
                 .Map(destino => destino.Nombre, origen => origen.Nombre)
                 .Map(destino => destino.Apellido, origen => origen.Apellido)
                 .Map(destino => destino.Correo, origen => origen.Correo)
-                .Map(destino => destino.Clave, origen => origen.Clave)
                 .Map(destino => destino.FechaCreacion, origen => origen.FechaCreacion);
     }
 }

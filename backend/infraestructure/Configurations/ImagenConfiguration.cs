@@ -10,7 +10,7 @@ public class ImagenConfiguration : IEntityTypeConfiguration<Imagen>
     {
         builder.HasKey(x => x.IdImagen);
         builder.Property(x => x.Datos).IsRequired();
-        builder.Property(x => x.Formato).IsRequired().HasMaxLength(20);
+        builder.Property(x => x.Formato).IsRequired();
     }
 
 }
