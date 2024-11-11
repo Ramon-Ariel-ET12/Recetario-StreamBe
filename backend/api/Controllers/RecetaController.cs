@@ -29,7 +29,7 @@ public class RecetaController : ControllerBase
             string.IsNullOrEmpty(nuevareceta.Descripcion) ||
                 nuevareceta.Ingrediente == null ||
                 nuevareceta.Imagen == null ||
-                nuevareceta.Imagen.Count > 1)
+                nuevareceta.Imagen.Count == 0)
             {
                 return BadRequest("Rellene los campos.");
             }
@@ -49,11 +49,11 @@ public class RecetaController : ControllerBase
 
 
     [HttpGet]
-    public async Task<IActionResult> TraerRecetas()
+    public async Task<IActionResult> TraerRecetas(int salteo = 0)
     {
         try
         {
-            var recetas = await context.TraerReceta();
+            var recetas = await context.TraerRecetas(salteo);
 
             var recetaconlaimagen = recetas.Adapt<List<RecetaQueryDto>>();
 
@@ -65,4 +65,26 @@ public class RecetaController : ControllerBase
             return BadRequest("Error en el backend: " + ex.Message);
         }
     }
+
+    [HttpGet]
+    public async Task<IActionResult> TraerRecetasPorIdReceta(string id)
+    {
+        try
+        {
+            if (!Guid.TryParse(id, out var IdReceta))
+                return BadRequest("No se encontro la receta.");
+
+            var recetas = await context.TraerRecetaPorIdReceta(IdReceta);
+
+            var recetaconlaimagen = recetas.Adapt<List<RecetaQueryDto>>();
+
+            return Ok(recetaconlaimagen);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            return BadRequest("Error en el backend: " + ex.Message);
+        }
+    }
+
 }
