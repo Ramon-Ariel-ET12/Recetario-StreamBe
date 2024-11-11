@@ -3,10 +3,10 @@ import Card from '../Servicios/Card'
 import ReactPlayer from 'react-player'
 import SearchBar from '../Servicios/SearchBar'
 import Recetas from '../Servicios/ListadeReceta'
-
 const Inicio = () => {
+  document.title = "Inicio";
   return (
-    <div className='container' style={{maxWidth:'90%'}}>
+    <div style={{ margin: 'auto', maxWidth: '90%' }}>
       <Card style={{ width: '100%', margin: '2rem auto', padding: '1.5rem', lineHeight: '1.6' }}>
         <div className="card mb-3" style={{ maxWidth: '100%', borderStyle: 'none' }}>
           <div className="row g-0">
@@ -28,12 +28,13 @@ const Inicio = () => {
             </div>
           </div>
         </div>
+
       </Card>
       <Card style={{ width: '100%', margin: '2rem auto', padding: '1.5rem', lineHeight: '1.6' }}>
         <SearchBar />
       </Card>
 
-        <Recetas />
+      <Recetas />
 
     </div>
   )
