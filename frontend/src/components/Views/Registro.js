@@ -39,15 +39,15 @@ function Registro() {
 
     return (
         <>
-            <Card style={{ margin: 'auto' }}>
+            <Card className='registro' style={{ margin: 'auto' }}>
                 <h1 className='text-center'>Bienvenido!</h1>
                 <form onSubmit={RegistrarUsuario}>
-                    <div className="row mb-3">
-                        <div className="col-md-6">
+                    <div className="row">
+                        <div className="col-md-6 mb-3">
                             <label htmlFor='nombre' className="form-label">Nombre</label>
                             <input type="text" id='nombre' className="form-control" placeholder="nombre" onChange={(e) => setNombre(e.target.value)} />
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-md-6 mb-3">
                             <label htmlFor='apellido' className="form-label">Apellido</label>
                             <input type="text" id='apellido' className="form-control" placeholder="apellido" onChange={(e) => setApellido(e.target.value)} />
                         </div>

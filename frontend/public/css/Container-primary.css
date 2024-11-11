@@ -7,9 +7,11 @@
 
 
 @media (max-width: 576px) {
-    .card{
-        width: 90% !important;
+
+    .registro {
+        width: 80% !important;
     }
+
     .footers {
         flex-direction: column;
         align-items: center;
@@ -17,18 +19,24 @@
     }
 }
 
-table tbody{
+table tbody {
     background-color: var(--secondary-bg-color);
 }
 
+.limited-text {
+    max-height: 70px;
+    max-width: 220px;
+    overflow: hidden;
+}
 
 table tbody tr td input,
 table thead,
-table tbody tr td textarea{
+table tbody tr td textarea {
     color: var(--text-color) !important;
-    background-color:transparent !important;
+    background-color: transparent !important;
     border: none !important;
 }
+
 .navbar {
     background-color: var(--primary-bg-color);
     color: var(--text-color);

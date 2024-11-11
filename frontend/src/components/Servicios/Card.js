@@ -1,8 +1,8 @@
 
-export const Card = ({ children, style  }) => {
+export const Card = ({ children, className = '', style }) => {
     return (
-        <div className="card" style={{ padding:'20px', width: 'fit-content', height: 'fit-content', ...style }}>
-            {children }
+        <div className={`card ${className}`} style={{ padding: '20px', width: 'fit-content', height: 'fit-content', ...style }}>
+            {children}
         </div>
     );
 }
