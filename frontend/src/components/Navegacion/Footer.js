@@ -16,7 +16,7 @@ function Footer() {
             <nav className="navbar navbar-expand-lg justify-content-between footers px-4">
                     <a href="https://github.com/Ramon-Ariel-ET12/Recetario-StreamBe" className="footer-icon"><i className="bi bi-github"></i></a>
                     {message && <div className="footer-message">{message}</div>}
-                    <a href="/Sobre-nosotros" className="footer-link">Sobre nosotros</a>
+                    <a href="/Sobre-nosotros" target="_blank" className="footer-link">Sobre nosotros</a>
             </nav>
         </footer>
     );
