@@ -3,17 +3,18 @@ import Card from "../Servicios/Card";
 import AuthContext from "../../Authorization";
 import api from "../Servicios/Api";
 import Button from "../Servicios/Button";
-import { AlertDanger, AlertSucces, AlertWarning } from "../Servicios/AlertMessage";
+import { AlertSucces, AlertWarning } from "../Servicios/AlertMessage";
 
 export function SubirReceta() {
+    document.title= "Cual será la receta";
     const [loading, setLoading] = useState(false);
     const { ObtenerUsuario } = useContext(AuthContext);
     const [ingredientes, setIngredientes] = useState([{ cantidad: "", unidadMedida: "", descripcion: "" }]);
     const [instrucciones, setInstrucciones] = useState([{ paso: "", explicacion: "" }]);
     const [imagen, setImagen] = useState(null);
-    const [nombre, setNombre] = useState(null);
+    const [nombre, setNombre] = useState("");
     const [message, setMessage] = useState(null);
-    const [descripcion, setDescripcion] = useState(null);
+    const [descripcion, setDescripcion] = useState("");
 
     const manejarImagen = (e) => {
         const archivo = e.target.files[0];
@@ -58,11 +59,7 @@ export function SubirReceta() {
         const usuario = ObtenerUsuario();
 
         const ingredientesConCantidadValida = ingredientes
-            .filter(ingrediente => ingrediente.cantidad && ingrediente.unidadMedida && ingrediente.descripcion)
-            .map(ingrediente => ({
-                ...ingrediente,
-                cantidad: parseFloat(ingrediente.cantidad) || 0
-            }));
+            .filter(ingrediente => ingrediente.cantidad && ingrediente.unidadMedida && ingrediente.descripcion);
 
         const instruccionesValidas = instrucciones
             .filter(instruccion => instruccion.paso && instruccion.explicacion);
@@ -74,22 +71,36 @@ export function SubirReceta() {
             descripcion: descripcion,
             ingrediente: ingredientesConCantidadValida,
             imagen: imagenesValidas,
-            idUsuario: usuario.IdUsuario.toString(),
+            idUsuario: usuario.IdUsuario,
             instruccion: instruccionesValidas,
         };
 
         console.log("Receta a enviar:", nuevareceta);
 
         try {
-            const response = await api.post("/Receta/CrearReceta", nuevareceta);
+            await api.post("/Receta/CrearReceta", nuevareceta);
             setMessage(AlertSucces("Tu receta se ha subido correctamente."));
+            setNombre("");
+            setDescripcion("");
+            setInstrucciones([{ cantidad: "", unidadMedida: "", descripcion: "" }]);
+            setIngredientes([{ paso: "", explicacion: "" }]);
+            setImagen(null);
         } catch (error) {
             const errorMessage = error.response?.data || "Error en subir la receta.";
-            setMessage(AlertDanger(errorMessage));
+            setMessage(AlertWarning(errorMessage));
             console.error("Error al crear la receta:", error);
         }
         finally {
             setLoading(false);
+        }
+    };
+
+    const manejarCantidad = (e, cell) => {
+        const valor = e.target.value;
+        const condicion = /^[0-9/]*$/;
+
+        if (condicion.test(valor)) {
+            AgregarInput(cell, 'cantidad', valor, ingredientes, setIngredientes);
         }
     };
 
@@ -158,11 +169,11 @@ export function SubirReceta() {
                     {ingredientes.map((ingrediente, cell) => (
                         <div key={cell} className="input-group mb-3">
                             <input
-                                type="number"
+                                type="text"
                                 className="form-control"
                                 placeholder="Cantidad"
                                 value={ingrediente.cantidad}
-                                onChange={(e) => AgregarInput(cell, 'cantidad', e.target.value, ingredientes, setIngredientes)}
+                                onChange={(e) => manejarCantidad(e, cell)}
                             />
                             <input
                                 type="text"
@@ -223,6 +234,7 @@ export function SubirReceta() {
                     </Button>
                 </form>
             </Card>
+
         </>
     );
 }
