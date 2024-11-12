@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import Card from './Card';
 import Loading from './Loading';
-import { TraerRecetasApi } from './ConsumoApi';
+import { TraerRecetasApi, TraerRecetasPorBusquedaApi } from './ConsumoApi';
 import Button from "./Button"
 
-export function Recetas() {
+export function Recetas({ buscar }) {
     const [loading, setLoading] = useState(true);
     const [loadingButton, setLoadingButton] = useState(false);
     const [recetas, setRecetas] = useState([]);
@@ -13,6 +13,15 @@ export function Recetas() {
 
     useEffect(() => {
         async function TraerRecetas() {
+            if (buscar) {
+                const response = await TraerRecetasPorBusquedaApi(buscar);
+                setRecetas(response.data);
+                setLoading(true);
+            }
+            else
+            {
+                setRecetas([]);
+            }
             try {
                 const response = await TraerRecetasApi(salteo);
                 if (response.data.length < 12) {
@@ -33,10 +42,8 @@ export function Recetas() {
                 setLoading(false);
             }
         }
-
-
         TraerRecetas();
-    }, [salteo]);
+    }, [buscar, salteo]);
 
     const loadMore = () => {
         setLoadingButton(true);
@@ -76,7 +83,7 @@ export function Recetas() {
                     </div>
                 ))}
             </div>
-            {hasMore && (
+            {hasMore && !buscar  && (
                 <div className="text-center" style={{ marginBottom: '20px' }}>
                     <Button disabled={loadingButton} onClick={loadMore} >
                         {loadingButton ? "Trayendo recetas..." : "Cargar más recetas"}

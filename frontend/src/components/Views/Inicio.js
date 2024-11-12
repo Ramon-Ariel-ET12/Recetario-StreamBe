@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Card from '../Servicios/Card'
 import ReactPlayer from 'react-player'
 import SearchBar from '../Servicios/SearchBar'
 import Recetas from '../Servicios/ListadeReceta'
 const Inicio = () => {
+  const [obtenido, setObtenido] = useState();
   document.title = "Inicio";
-  
+
+  function Obtener(dato) {
+    setObtenido(dato)
+  }
+
   return (
     <div style={{ margin: 'auto', maxWidth: '90%' }}>
       <Card style={{ width: '100%', margin: '2rem auto', padding: '1.5rem', lineHeight: '1.6' }}>
@@ -32,10 +37,10 @@ const Inicio = () => {
 
       </Card>
       <Card style={{ width: '100%', margin: '2rem auto', padding: '1.5rem', lineHeight: '1.6' }}>
-        <SearchBar />
+        <SearchBar busqueda={Obtener}/>
       </Card>
 
-      <Recetas />
+      <Recetas buscar={obtenido}/>
 
     </div>
   )

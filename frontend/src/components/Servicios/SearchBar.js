@@ -1,36 +1,32 @@
+import Button from './Button';
 import React, { useState } from 'react';
 
-function SearchBar() {
-  const [searchTerm, setSearchTerm] = useState('');
+function SearchBar({ busqueda, loading }) {
+  const [buscar, setBuscar] = useState("");
 
-  const handleChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
-
+  function handleChange(e) {
+    setBuscar(e.target.value);
+  }
   const handleSubmit = (event) => {
     event.preventDefault();
-    // aca agrega las consultas
-    console.log('Search term:', searchTerm);
+    busqueda(buscar);
   };
 
   return (
-    <nav className="navbar bg-body-tertiary">
-      <div className="container-fluid" >
-        <form className="d-flex" role="search" style={{width:'100%'}} onSubmit={handleSubmit}>
-          <input
-            className="form-control me-2"
-            type="search"
-            placeholder="Buscar"
-            aria-label="Search"
-            value={searchTerm}
-            onChange={handleChange}
-          />
-          <button className="btn" type="submit">
-            Buscar
-          </button>
-        </form>
-      </div>
-    </nav>
+    <>
+      <form className="d-flex" role="search" onSubmit={handleSubmit}>
+        <input
+          className="form-control me-2"
+          type="search"
+          placeholder="Buscar"
+          aria-label="Search"
+          onChange={handleChange}
+        />
+        <Button disabled={loading} onSubmit={handleSubmit}>
+          {loading ? "Cargando..." : "Buscar"}
+        </Button>
+      </form>
+    </>
   );
 }
 
