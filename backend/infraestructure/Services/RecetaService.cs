@@ -42,4 +42,13 @@ public class RecetaService : IRecetaService
     {
         return await context.TraerReceta(salteo: salteo);
     }
+    public async Task<List<Receta>> TraerRecetasPorBusqueda(string busqueda)
+    {
+        return await context.TraerReceta(x =>
+            x.Nombre.ToLower().Contains(busqueda.ToLower()) ||
+            x.Descripcion.ToLower().Contains(busqueda.ToLower()) ||
+            x.Usuario.Nombre.ToLower().Contains(busqueda.ToLower()) ||
+            x.Usuario.Apellido.ToLower().Contains(busqueda.ToLower())
+        );
+    }
 }

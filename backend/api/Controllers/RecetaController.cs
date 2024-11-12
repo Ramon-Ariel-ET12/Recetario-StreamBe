@@ -119,4 +119,22 @@ public class RecetaController : ControllerBase
         }
     }
 
+    [HttpGet]
+    public async Task<IActionResult> TraerRecetasPorBusqueda(string busqueda)
+    {
+        try
+        {
+            var recetas = await context.TraerRecetasPorBusqueda(busqueda);
+
+            var recetaconlaimagen = recetas.Adapt<List<RecetaQueryDto>>();
+
+            return Ok(recetaconlaimagen);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            return BadRequest("Error en el backend: " + ex.Message);
+        }
+    }
+
 }

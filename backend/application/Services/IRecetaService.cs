@@ -10,4 +10,5 @@ public interface IRecetaService
     Task<List<Receta>> TraerRecetaPorIdUsuario(Guid IdUsuario);
     Task<List<Receta>> TraerRecetaPorIdReceta(Guid IdReceta);
     Task<List<Receta>> TraerRecetaPorNombre(string Nombre);
+    Task<List<Receta>> TraerRecetasPorBusqueda(string busqueda);
 }

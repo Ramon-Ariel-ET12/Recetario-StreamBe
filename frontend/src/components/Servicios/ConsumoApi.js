@@ -16,6 +16,9 @@ export const TraerRecetasApi = async (salteo = 0) => {
 export const TraerRecetasPorIdApi = async (IdReceta) => {
         return  await api.get(`/Receta/TraerRecetasPorIdReceta?id=${IdReceta}`);
 }
+export const TraerRecetasPorBusquedaApi = async (busqueda) => {
+        return  await api.get(`/Receta/TraerRecetasPorBusqueda?busqueda=${busqueda}`);
+}
 
 export const TraerUsuarioApi = async (id) => {
     return await api.get(`/Usuario/Traerusuario?id=${id}`);
