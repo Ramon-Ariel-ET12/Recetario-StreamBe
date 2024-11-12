@@ -43,7 +43,7 @@ export function Receta() {
                         <div className="col" style={{ marginRight: '20px' }}>
                             <h1><u>{receta.nombre}</u></h1>
                             <h4>Ingredientes:</h4>
-                            <ul style={{ listStyle: 'disc inside', marginLeft: '20px' }}>
+                            <ul>
                                 {receta.ingrediente.map((x, index) => (
                                     <li key={index}>
                                         {x.cantidad} {x.unidadMedida} de {x.descripcion}
