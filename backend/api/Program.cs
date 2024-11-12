@@ -35,7 +35,7 @@ builder.Services.AddCors(x =>
     {
         builder.AllowAnyHeader()
                 .AllowAnyMethod()
-                .WithOrigins("http://localhost:3000", "https://frontend-recetario-x6vq.onrender.com/")
+                .WithOrigins("http://localhost:3000", "https://frontend-recetario-x6vq.onrender.com")
                 .AllowCredentials();
     });
 });
