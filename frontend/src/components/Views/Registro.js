@@ -64,7 +64,7 @@ function Registro() {
                     <div className="form-check mb-3">
                         <input type="checkbox" id="terms" className="form-check-input" checked={isChecked} onChange={() => setIsChecked(!isChecked)} />
                         <label htmlFor="terms" className="form-check-label">
-                            Al registrarse acepta los <a href="/terminos-y-condiciones" target="_blank">términos y condiciones</a>.
+                            Al registrarse acepta los <a href="/terminos-y-condiciones">términos y condiciones</a>.
                         </label>
                     </div>
 

@@ -39,36 +39,40 @@ export function Receta() {
             <br />
             <Card style={{ width: '100%', margin: 'auto' }}>
                 {receta ? (
-                    <>
-                        <h2>{receta.nombre}</h2>
-                        {receta.imagen.length > 0 ? (
-                            <img
-                                src={`data:${receta.imagen[0].formato};base64,${receta.imagen[0].datos}`}
-                                alt={`Imagen de la receta`}
-                                style={{ width: '200px', height: '200px', borderRadius: '8px' }}
-                            />
-                        ) : (
-                            <p>Sin imagen disponible</p>
-                        )}
-                        <h3>Ingredientes:</h3>
-                        <ul style={{ listStyle: 'disc inside', marginLeft: '20px' }}>
-                            {receta.ingrediente.map((x, index) => (
-                                <li key={index}>
-                                    {x.cantidad} {x.unidadMedida} de {x.descripcion}
-                                </li>
-                            ))}
-                        </ul>
-                        <h3>Instrucciones:</h3>
-                        <ul>
-                            {receta.instruccion.map((x, index) => (
-                                <li key={index}>
-                                    {`Paso ${x.paso}: ${x.explicacion}`}
-                                </li>
-                            ))}
-                        </ul>
-                        <p><strong>Creado por:</strong> {receta.usuario.nombre} {receta.usuario.apellido}</p>
-                        <p><strong>Descripción:</strong> {receta.descripcion}</p>
-                    </>
+                    <div className="row">
+                        <div className="col" style={{ marginRight: '20px' }}>
+                            <h1><u>{receta.nombre}</u></h1>
+                            <h4>Ingredientes:</h4>
+                            <ul style={{ listStyle: 'disc inside', marginLeft: '20px' }}>
+                                {receta.ingrediente.map((x, index) => (
+                                    <li key={index}>
+                                        {x.cantidad} {x.unidadMedida} de {x.descripcion}
+                                    </li>
+                                ))}
+                            </ul>
+                            <h4>Instrucciones:</h4>
+                            <ul>
+                                {receta.instruccion.map((x, index) => (
+                                    <li key={index}>
+                                        {`Paso ${x.paso}: ${x.explicacion}`}
+                                    </li>
+                                ))}
+                            </ul>
+                            <p><strong>Creado por:</strong> {receta.usuario.nombre} {receta.usuario.apellido}</p>
+                            <p><strong>Descripción:</strong> {receta.descripcion}</p>
+                        </div>
+                        <div className="col-auto" style={{ width: '400px', height: '400px' }}>
+                            {receta.imagen.length > 0 ? (
+                                <img
+                                    src={`data:${receta.imagen[0].formato};base64,${receta.imagen[0].datos}`}
+                                    alt={`Imagen de la receta`}
+                                    style={{ width: '100%', height: '100%', borderRadius: '8px' }}
+                                />
+                            ) : (
+                                <p>Sin imagen disponible</p>
+                            )}
+                        </div>
+                    </div>
                 ) : (
                     <p>No se encontró la receta.</p>
                 )}
