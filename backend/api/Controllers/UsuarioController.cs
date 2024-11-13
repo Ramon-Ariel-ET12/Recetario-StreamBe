@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -59,8 +60,26 @@ public class UsuarioController : ControllerBase
     {
         try
         {
-            if (usuario.Nombre != null && usuario.Apellido != null && usuario.Correo != null && usuario.Clave != null)
+            var email = new EmailAddressAttribute();
+            if (usuario != null)
             {
+                var separar = usuario.Nombre.Trim(' ');
+                string[] validar = separar.Split(' ');
+                if (string.IsNullOrEmpty(usuario.Nombre) || validar.Length > 2)
+                    return BadRequest("Ingrese su nombre");
+
+                separar = usuario.Apellido.Trim(' ');
+                validar = separar.Split(' ');
+
+                if (string.IsNullOrEmpty(usuario.Apellido) || validar.Length > 2)
+                    return BadRequest("Ingrese su apellido");
+
+                if (!email.IsValid(usuario.Correo))
+                    return BadRequest("Ingrese un email válido");
+                if (string.IsNullOrEmpty(usuario.Clave))
+                    return BadRequest("Ingrese su clave");
+                if (usuario.Clave.Length < 7)
+                    return BadRequest("El clave debe ser mayo a 7");
                 var existe = await context.TraerUsuarioPorCorreo(usuario.Correo!);
                 if (existe == null)
                 {
