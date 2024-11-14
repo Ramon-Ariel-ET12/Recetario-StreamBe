@@ -13,12 +13,13 @@ export function Recetas({ buscar }) {
 
     useEffect(() => {
         const fetchRecetas = async () => {
-            setLoading(true);
             try {
                 let response;
+                setLoading(true);
                 if (buscar) {
                     response = await TraerRecetasPorBusquedaApi(buscar);
                     setRecetas(response.data);
+                    setSalteo(0);
                 } else {
                     response = await TraerRecetasApi(salteo);
                     if (response.data.length < 12) {
@@ -47,7 +48,7 @@ export function Recetas({ buscar }) {
         setSalteo((prevSalteo) => prevSalteo + 1);
     };
 
-    if (loading) return <Loading />;
+    if (loading && recetas.length === 0) return <Loading />;
 
     return (
         <div>
@@ -70,8 +71,8 @@ export function Recetas({ buscar }) {
                                                 className="card-img-top"
                                                 style={{ width: '200px', height: '200px' }}
                                                 onError={(e) => {
-                                                    e.target.src = ''; // Limpia la imagen si falla
-                                                    e.target.style.backgroundColor = '#d3d3d3'; // Estilo por defecto
+                                                    e.target.src = '';
+                                                    e.target.style.backgroundColor = '#d3d3d3';
                                                 }}
                                             />
                                         </div>

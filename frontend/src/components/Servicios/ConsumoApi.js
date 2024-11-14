@@ -10,7 +10,7 @@ export const IniciarSesionApi = async (correo, clave) => {
 }
 
 export const TraerRecetasApi = async (salteo = 0) => {
-        return  await api.get(`/Receta/TraerRecetas?salteo=${salteo * 10}`);
+        return  await api.get(`/Receta/TraerRecetas?salteo=${salteo * 12}`);
 }
 
 export const TraerRecetasPorIdApi = async (IdReceta) => {
