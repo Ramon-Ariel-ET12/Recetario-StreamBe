@@ -3,7 +3,7 @@ import Card from "../Servicios/Card";
 function TerminosCondiciones() {
     return (
         <>
-            <Card style={{ width: '70%', margin: '2rem auto', padding: '1.5rem', lineHeight: '1.6' }}>
+            <Card style={{ width: '90%', margin: '2rem auto', padding: '1.5rem', lineHeight: '1.6' }}>
                 <h1 className="text-center mb-4">Términos y Condiciones de Uso de Recetario</h1>
                 <section>
                     <h2>1. Aceptación de los Términos</h2>
