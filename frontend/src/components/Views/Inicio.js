@@ -24,6 +24,7 @@ const Inicio = () => {
                 </p>
               </div>
             </div>
+            
             <div className="col-md-4">
               <ReactPlayer
                 url="https://youtu.be/AhaxAbtuy_E"

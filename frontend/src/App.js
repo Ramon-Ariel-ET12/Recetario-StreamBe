@@ -14,6 +14,7 @@ import Terminoscondiciones from './components/Views/Terminoscondiciones';
 import { SubirReceta } from './components/Views/SubirReceta';
 import Loading from './components/Servicios/Loading';
 import Receta from './components/Views/Receta';
+import Sobrenosotros from './components/Views/Sobrenosotros';
 
 function PrivateRoute({ children }) {
   const { logueado, loading } = useContext(AuthContext);
@@ -40,6 +41,7 @@ function App() {
             <Route path="/Registrarse" element={<Registro />} />
             <Route path="/Iniciar-sesion" element={<Login />} />
             <Route path="/Terminos-y-condiciones" element={<Terminoscondiciones />} />
+            <Route path="/Sobre-nosotros" element={<Sobrenosotros />} />
             <Route path="/Contacto" element={<PrivateRoute><Contacto /></PrivateRoute>} />
             <Route path="/Subir-receta" element={<PrivateRoute><SubirReceta /></PrivateRoute>} />
             {/* <Route path="/Ver-mis-recetas" element={<PrivateRoute><VerMisRecetas /></PrivateRoute>} /> */}
