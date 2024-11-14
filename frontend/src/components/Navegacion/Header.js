@@ -14,6 +14,7 @@ function Perfil() {
             </button>
 
             <ul className="dropdown-menu dropdown-menu-end">
+                {/* <li><a className="dropdown-item" href="/Ver-mis-recetas">Ver mis recetas</a></li> */}
                 <li><a className="dropdown-item" href="/Subir-receta">Subir receta</a></li>
                 <li><a className="dropdown-item" href='/Iniciar-sesion' onClick={logout}>Cerrar sesion</a></li>
             </ul>

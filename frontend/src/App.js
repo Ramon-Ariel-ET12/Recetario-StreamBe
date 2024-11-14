@@ -44,6 +44,7 @@ function App() {
             <Route path="/Sobre-nosotros" element={<Sobrenosotros />} />
             <Route path="/Contacto" element={<PrivateRoute><Contacto /></PrivateRoute>} />
             <Route path="/Subir-receta" element={<PrivateRoute><SubirReceta /></PrivateRoute>} />
+            {/* <Route path="/Ver-mis-recetas" element={<PrivateRoute><VerMisRecetas /></PrivateRoute>} /> */}
             <Route path="/Receta/:id" element={<PrivateRoute><Receta /></PrivateRoute>} />
           </Routes>
         </Layout>

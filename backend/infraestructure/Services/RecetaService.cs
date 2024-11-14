@@ -45,6 +45,7 @@ public class RecetaService : IRecetaService
     public async Task<List<Receta>> TraerRecetasPorBusqueda(string busqueda)
     {
         return await context.TraerReceta(x =>
+            x.Usuario.IdUsuario.ToString().Equals(busqueda) ||
             x.Nombre.ToLower().Contains(busqueda.ToLower()) ||
             x.Descripcion.ToLower().Contains(busqueda.ToLower()) ||
             x.Usuario.Nombre.ToLower().Contains(busqueda.ToLower()) ||

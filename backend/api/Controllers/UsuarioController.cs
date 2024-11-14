@@ -63,18 +63,17 @@ public class UsuarioController : ControllerBase
             var email = new EmailAddressAttribute();
             if (usuario != null)
             {
-                var separar = usuario.Nombre.Trim(' ');
+                var separar = usuario.Nombre!.Trim(' ');
                 string[] validar = separar.Split(' ');
-                if (string.IsNullOrEmpty(usuario.Nombre) || validar.Length > 2)
+                if (string.IsNullOrEmpty(usuario.Nombre))
                     return BadRequest("Ingrese su nombre");
-
-                separar = usuario.Apellido.Trim(' ');
+                if (validar.Length > 2)
+                    return BadRequest("Solo puede ingresar uno o dos nombres");
+                separar = usuario.Apellido!.Trim(' ');
                 validar = separar.Split(' ');
-
                 if (string.IsNullOrEmpty(usuario.Apellido) || validar.Length > 2)
                     return BadRequest("Ingrese su apellido");
-
-                if (!email.IsValid(usuario.Correo))
+                if (!email.IsValid(usuario.Correo) || usuario.Correo!.Contains(' '))
                     return BadRequest("Ingrese un email válido");
                 if (string.IsNullOrEmpty(usuario.Clave))
                     return BadRequest("Ingrese su clave");

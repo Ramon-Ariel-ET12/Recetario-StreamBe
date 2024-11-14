@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Card from './Card';
 import Loading from './Loading';
 import { TraerRecetasApi, TraerRecetasPorBusquedaApi } from './ConsumoApi';
-import Button from "./Button"
+import Button from "./Button";
 
 export function Recetas({ buscar }) {
     const [loading, setLoading] = useState(true);
@@ -12,81 +12,91 @@ export function Recetas({ buscar }) {
     const [hasMore, setHasMore] = useState(true);
 
     useEffect(() => {
-        async function TraerRecetas() {
-            if (buscar) {
-                const response = await TraerRecetasPorBusquedaApi(buscar);
-                setRecetas(response.data);
-                setLoading(true);
-            }
-            else
-            {
-                setRecetas([]);
-            }
+        const fetchRecetas = async () => {
+            setLoading(true);
             try {
-                const response = await TraerRecetasApi(salteo);
-                if (response.data.length < 12) {
-                    setHasMore(false);
+                let response;
+                if (buscar) {
+                    response = await TraerRecetasPorBusquedaApi(buscar);
+                    setRecetas(response.data);
+                } else {
+                    response = await TraerRecetasApi(salteo);
+                    if (response.data.length < 12) {
+                        setHasMore(false);
+                    }
+                    setRecetas((prevRecetas) => [
+                        ...prevRecetas.filter(
+                            (receta) => !response.data.some((r) => r.idReceta === receta.idReceta)
+                        ),
+                        ...response.data,
+                    ]);
                 }
-                setRecetas((x) => {
-                    const newRecetas = response.data.filter(
-                        (receta) => !x.some((r) => r.idReceta === receta.idReceta)
-                    );
-                    console.log(newRecetas);
-                    return [...x, ...newRecetas];
-                });
             } catch (error) {
-                document.location.reload();
-                console.error("Error al obtener recetas:", error);
+                console.error('Error al obtener recetas:', error);
             } finally {
-                setLoadingButton(false);
                 setLoading(false);
+                setLoadingButton(false);
             }
-        }
-        TraerRecetas();
+        };
+
+        fetchRecetas();
     }, [buscar, salteo]);
 
     const loadMore = () => {
         setLoadingButton(true);
-        setSalteo((nuevoSalteo) => nuevoSalteo + 1);
+        setSalteo((prevSalteo) => prevSalteo + 1);
     };
 
-    if (loading) {
-        return Loading();
-    }
+    if (loading) return <Loading />;
 
     return (
         <div>
             <div className="d-flex flex-wrap">
-                {recetas.map((x) => (
-                    <div className="mb-4" style={{ margin: 'auto' }} key={x.idReceta}>
-                        <Card style={{ width: '300px', height: '500px' }}>
-                            {x.imagen && x.imagen.length > 0 ? (
-                                x.imagen.map((x, cell) => (
-                                    <div key={x.idImagen} style={{ margin: 'auto', height: 'min-content', width: 'min-content' }}>
-                                        <img
-                                            src={`data:${x.formato};base64,${x.datos}`}
-                                            alt={`Receta ${cell + 1}`}
-                                            className="card-img-top"
-                                            style={{ width: '200px', height: '200px' }}
-                                            onError={(e) => { e.target.src = ''; e.target.style.backgroundColor = '#d3d3d3'; }}
-                                        />
-                                    </div>
-                                ))) : (<p>Error en obtener la imagen</p>)}
+                {recetas.length === 0 ? (
+                    <p>No se encontraron recetas.</p>
+                ) : (
+                    recetas.map((receta) => (
+                        <div className="mb-4" style={{ margin: 'auto' }} key={receta.idReceta}>
+                            <Card style={{ width: '300px', height: '500px' }}>
+                                {receta.imagen && receta.imagen.length > 0 ? (
+                                    receta.imagen.map((img, index) => (
+                                        <div
+                                            key={img.idImagen}
+                                            style={{ margin: 'auto', height: 'min-content', width: 'min-content' }}
+                                        >
+                                            <img
+                                                src={`data:${img.formato};base64,${img.datos}`}
+                                                alt={`Receta ${index + 1}`}
+                                                className="card-img-top"
+                                                style={{ width: '200px', height: '200px' }}
+                                                onError={(e) => {
+                                                    e.target.src = ''; // Limpia la imagen si falla
+                                                    e.target.style.backgroundColor = '#d3d3d3'; // Estilo por defecto
+                                                }}
+                                            />
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p>Error en obtener la imagen</p>
+                                )}
 
-                            <div style={{ bottom: '0' }}>
-                                <p>De: {`${x.usuario.nombre} ${x.usuario.apellido}`}</p>
-                                <h5 className="limited-text">{x.nombre}</h5>
-                                <p className="limited-text">{x.descripcion}</p>
-                                <a href={`/Receta/:${x.idReceta}`} className="btn">Ver receta</a>
-                            </div>
-                        </Card>
-                    </div>
-                ))}
+                                <div style={{ bottom: '0' }}>
+                                    <p>De: {`${receta.usuario.nombre} ${receta.usuario.apellido}`}</p>
+                                    <h5 className="limited-text">{receta.nombre}</h5>
+                                    <p className="limited-text">{receta.descripcion}</p>
+                                    <a href={`/Receta/:${receta.idReceta}`} className="btn">
+                                        Ver receta
+                                    </a>
+                                </div>
+                            </Card>
+                        </div>
+                    ))
+                )}
             </div>
-            {hasMore && !buscar  && (
+            {hasMore && !buscar && (
                 <div className="text-center" style={{ marginBottom: '20px' }}>
-                    <Button disabled={loadingButton} onClick={loadMore} >
-                        {loadingButton ? "Trayendo recetas..." : "Cargar más recetas"}
+                    <Button disabled={loadingButton} onClick={loadMore}>
+                        {loadingButton ? 'Trayendo recetas...' : 'Cargar más recetas'}
                     </Button>
                 </div>
             )}

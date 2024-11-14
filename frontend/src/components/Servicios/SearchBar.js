@@ -1,15 +1,19 @@
 import Button from './Button';
 import React, { useState } from 'react';
 
-function SearchBar({ busqueda, loading }) {
+function SearchBar({ busqueda}) {
   const [buscar, setBuscar] = useState("");
+  const [loading , setLoading] = useState(false);
 
   function handleChange(e) {
     setBuscar(e.target.value);
+    
   }
   const handleSubmit = (event) => {
     event.preventDefault();
+    setLoading(true);
     busqueda(buscar);
+    setLoading(false);
   };
 
   return (
@@ -22,7 +26,7 @@ function SearchBar({ busqueda, loading }) {
           aria-label="Search"
           onChange={handleChange}
         />
-        <Button disabled={loading} onSubmit={handleSubmit}>
+        <Button type="submit" disabled={loading}>
           {loading ? "Cargando..." : "Buscar"}
         </Button>
       </form>
